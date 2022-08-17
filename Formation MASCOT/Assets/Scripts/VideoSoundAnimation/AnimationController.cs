@@ -26,7 +26,7 @@ public class AnimationController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        animator.Play("Hello");
+        PlayHelloAnimation();
     }
 
 
@@ -57,4 +57,9 @@ public class AnimationController : MonoBehaviour
         animator.SetBool("TurnRight", b);
     }
 
+    private void PlayHelloAnimation(){
+        if (GlobalManager.current.currentChapter == 0){
+            animator.Play("Hello");
+        }
+    }
 }

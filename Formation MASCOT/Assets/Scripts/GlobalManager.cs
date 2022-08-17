@@ -8,7 +8,7 @@ public class GlobalManager : MonoBehaviour
 
     public static GlobalManager current;           // Unique GlobalManager
     [HideInInspector]
-    public int currentChapter = 0;
+    public int currentChapter = 1;
     public List<GameObject> chapterList;
     public Transform chapterStartPosition;
 
@@ -22,7 +22,7 @@ public class GlobalManager : MonoBehaviour
         OnIsTransitionChanged?.Invoke(b);
     }
 
-    [SerializeField]
+    [HideInInspector]
     public Boolean isTransition = false;
     public Boolean IsTransition{
         get => isTransition;
@@ -42,7 +42,7 @@ public class GlobalManager : MonoBehaviour
         OnCurrentChapterFinished?.Invoke(b);
     }
 
-    [SerializeField]
+    [HideInInspector]
     public Boolean currentChapterFinished = false;
     public Boolean IsCurrentChapterFinished{
         get => currentChapterFinished;
@@ -62,7 +62,7 @@ public class GlobalManager : MonoBehaviour
         OnGenderChanged?.Invoke(s);
     }
 
-    [SerializeField]
+    [HideInInspector]
     public String playerGender = "man";
     public String PlayerGender{
         get => playerGender;
@@ -82,7 +82,7 @@ public class GlobalManager : MonoBehaviour
         OnVideoIndexChanged?.Invoke(l);
     }
 
-    [SerializeField]
+    [HideInInspector]
     public List<int> videoIndex = new List<int>();
     public List<int> VideoIndex{
         get => videoIndex;
@@ -102,7 +102,7 @@ public class GlobalManager : MonoBehaviour
         OnPhotoIndexChanged?.Invoke(l);
     }
 
-    [SerializeField]
+    [HideInInspector]
     public List<int> photoIndex = new List<int>();
     public List<int> PhotoIndex{
         get => photoIndex;
@@ -121,7 +121,7 @@ public class GlobalManager : MonoBehaviour
         OnHideScreenChanged?.Invoke(b);
     }
 
-    [SerializeField]
+    [HideInInspector]
     public Boolean hideScreen = false;
     public Boolean HideScreen{
         get => hideScreen;

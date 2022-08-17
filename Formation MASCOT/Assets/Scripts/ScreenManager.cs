@@ -9,12 +9,15 @@ public class ScreenManager : MonoBehaviour
 
     
     public GameObject screen;
-
     public float speed;
+
     public Transform shownPosition;
     public Transform hidenPosition;
+
     private Vector3 targetPosition;
     private Vector3 initialPosition;
+
+    private float time = 0;
     
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
@@ -34,11 +37,11 @@ public class ScreenManager : MonoBehaviour
 
     void Start()
     {
-        /*
-        GlobalManager.current.OnVideoIndexChanged += ShowScreen;
-        GlobalManager.current.OnPhotoIndexChanged += ShowScreen;
-        GlobalManager.current.OnHideScreenChanged += SetExitParameter;
-        */
+        
+        GlobalManager.current.OnVideoIndexChanged += Enter;
+        GlobalManager.current.OnPhotoIndexChanged += Enter;
+        GlobalManager.current.OnHideScreenChanged += Exit;
+        
     }
 
     void Update()
@@ -51,20 +54,25 @@ public class ScreenManager : MonoBehaviour
     public void Exit(bool b){
         
         if(b){
-            initialPosition = transform.position;
-            targetPosition = hidenPosition.position;
+            InitialisePosition(hidenPosition.position);
         }
     }
 
     public void Enter(List<int> l){
-        initialPosition = transform.position;
-        targetPosition = shownPosition.position;
+        InitialisePosition(shownPosition.position);
+    }
+
+    private void InitialisePosition(Vector3 targetPos){
+        initialPosition = screen.transform.position;
+        targetPosition = targetPos;
+        time = 0;
     }
 
     private void Move(){
 
         if (initialPosition != targetPosition){
-            transform.position = Vector3.Lerp(initialPosition, targetPosition, Time.deltaTime*speed);
+            time += Time.deltaTime;
+            screen.transform.position = Vector3.Lerp(initialPosition, targetPosition, time*speed);
         }
     }
 

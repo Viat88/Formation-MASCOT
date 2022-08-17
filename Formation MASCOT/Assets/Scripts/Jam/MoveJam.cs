@@ -45,6 +45,8 @@ public class MoveJam : MonoBehaviour
 
     void Update()
     {
+        Vector3 onFloor = new Vector3(transform.position.x, 0, transform.position.z);
+        transform.position  = onFloor;
         Move();
     }
 
@@ -142,6 +144,7 @@ public class MoveJam : MonoBehaviour
     }
 
     public void MoveJamToMirror(){
-        StartMoving ( new Vector3 (-transform.position.x, 0, transform.position.z ) );
+        Vector3 startPosition = GlobalManager.current.GetChapterStartPosition();
+        StartMoving ( new Vector3 (-startPosition.x, 0, startPosition.z ) );
     }
 }

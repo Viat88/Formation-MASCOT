@@ -14,6 +14,7 @@ public class SpeechSoundManager : MonoBehaviour
 
 
     // Presentation
+    [Header ("Presentation")]
     public AudioClip Pres01;
     public AudioClip Pres02;
     public AudioClip Pres03;
@@ -21,6 +22,12 @@ public class SpeechSoundManager : MonoBehaviour
     public AudioClip Pres05;
     public AudioClip Pres06Man;
     public AudioClip Pres06Woman;
+
+    [Header ("Supply")]
+    public List<AudioClip> supAudioClipList;
+
+    [Header ("Security")]
+    public List<AudioClip> safAudioClipList;
 
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
@@ -104,4 +111,33 @@ public class SpeechSoundManager : MonoBehaviour
         }
         
     }
+
+//////////////////////// Supply ////////////////////////////////////
+
+    public void PlaySupplyClip(int n){
+
+        if (n < supAudioClipList.Count){
+            PlaySound(supAudioClipList[n]);
+        }
+
+        else{
+            Debug.Log("Plus de vocaux supplémentaires");
+        }
+        
+    }
+
+//////////////////////// Security ////////////////////////////////////
+
+    public void PlaySecurityClip(int n){
+
+        if (n < safAudioClipList.Count){
+            PlaySound(safAudioClipList[n]);
+        }
+
+        else{
+            Debug.Log("Plus de vocaux supplémentaires");
+        }
+        
+    }
+
 }

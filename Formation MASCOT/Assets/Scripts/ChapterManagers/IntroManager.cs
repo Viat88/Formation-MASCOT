@@ -33,11 +33,14 @@ public class IntroManager : MonoBehaviour
             Destroy(obj: this);
         }
 
+        
     }
 
     void Start()
     {
+        GlobalManager.current.currentChapter = 0;
         SpeechSoundManager.current.PlayIntroSpeech();
+        
     }
 
 
@@ -72,4 +75,6 @@ public class IntroManager : MonoBehaviour
     public void StepPlusOne(){
         step += 1;
     }
+
+
 }

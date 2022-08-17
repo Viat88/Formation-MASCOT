@@ -6,7 +6,6 @@ public class PresManager : MonoBehaviour
 {
 
     public static PresManager current;
-    public GameObject carrousel;
     public GameObject buttons;
 
     /*
@@ -59,6 +58,7 @@ public class PresManager : MonoBehaviour
 
     void Start()
     {
+        GlobalManager.current.currentChapter = 1;
         indexesSaveList = new List<Vector3>();
     }
 
@@ -90,7 +90,7 @@ public class PresManager : MonoBehaviour
 
         if (step == 1 && !IsAudioSourcePlaying()){
             SpeechSoundManager.current.PlayPres02();
-            PlayNextVideo(0);                                    // Play video Pres01
+            PlayVideo(0);                                    // Play video Pres01
             step += 1;
         }
         
@@ -109,7 +109,7 @@ public class PresManager : MonoBehaviour
         }
         
         if (step == 3 && !IsAudioSourcePlaying()){              // 2nd available rewatch
-            ShowCarrousel(true);
+            PlayPhoto(0);
             SpeechSoundManager.current.PlayPres04();
             step += 1;
         }
@@ -125,7 +125,7 @@ public class PresManager : MonoBehaviour
         }
 
         if (step == 6 && !IsAudioSourcePlaying()){
-            ShowCarrousel(false);
+            PhotoManager.current.ShowPhoto(false);
             HideTheScreen(true);
             MoveJam.current.MoveJamToMiddle();
             step += 1;
@@ -152,6 +152,9 @@ public class PresManager : MonoBehaviour
         return VideoManager.current.IsVideoPlayerPlaying();
     }
 
+
+////////////////////////////////////////////////////////////
+
     /*
         Play next video by telling to GlobalManager the new Index
         ENTRY:
@@ -159,11 +162,21 @@ public class PresManager : MonoBehaviour
         EXIT:
             Nothing
     */
-    private void PlayNextVideo(int videoIndex){
-
-        GlobalManager.current.VideoIndex = GetList(-1);
+    private void PlayVideo(int videoIndex){
         GlobalManager.current.VideoIndex = GetList(videoIndex);
     }
+
+    /*
+        Play next photo by telling to GlobalManager the new Index
+        ENTRY:
+            photoIndex: int, the index among photos of Presentation 
+        EXIT:
+            Nothing
+    */
+    private void PlayPhoto(int photoIndex){
+        GlobalManager.current.PhotoIndex = GetList(photoIndex);
+    }
+
 
     private List<int> GetList(int n){
 
@@ -187,10 +200,6 @@ public class PresManager : MonoBehaviour
 
 ////////////////////////////////////////////////////////////
 
-    private void ShowCarrousel(bool b){
-        carrousel.SetActive(b);
-    }
-
     public void ShowFinalButtons(bool b){
         buttons.SetActive(b);
     }
@@ -199,24 +208,27 @@ public class PresManager : MonoBehaviour
 
     public void SetStep(string s){
 
+        if (s == "VideoButton" || s == "PhotoButton"){
+            RewatchPhotoOrVideo(s);
+        }
+
+        else{
+            Debug.Log("Erreur: le string rentré en argument ne correspond pas à une des options");
+        }
+    }
+
+    private void RewatchPhotoOrVideo(string s){
+
+        ShowFinalButtons(false);
+        step = -1;
+
         if (s == "VideoButton"){
-            ShowFinalButtons(false);
-            step = -1;
             isVideoRewatch = true;
         }
 
         else{
-
-            if (s == "PhotoButton"){
-                ShowFinalButtons(false);
-                step = -1;
-                isPhotoRewatch = true;
-            }
-
-            else{
-                Debug.Log("Erreur: le string rentré en argument ne correspond pas à une des options");
-            }
-        } 
+            isPhotoRewatch = true;
+        }
     }
     
 }

@@ -13,6 +13,8 @@ public class VideoManager : MonoBehaviour
     public float timeToWait; 
 
     public List<VideoClip> presVideoClipList;
+    public List<VideoClip> supVideoClipList;
+    public List<VideoClip> safVideoClipList;
 
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
@@ -63,21 +65,54 @@ public class VideoManager : MonoBehaviour
         int videoIndex = indexList[1];
         
         if (chapter == 1){
-            if (videoIndex < presVideoClipList.Count && videoIndex >= 0){
-                PlayVideo(presVideoClipList[videoIndex]);
-            } 
-
-            else{
-                Debug.Log("l'indice vidéo dépasse le nombre de clip vidéo disponible");
+            PlayPresVideo(videoIndex);
         }
+
+        if (chapter == 2){
+            PlaySupVideo(videoIndex);
+        }
+
+        if (chapter == 3){
+            PlaySafVideo(videoIndex);
         }
 
         else{
             Debug.Log("l'indice du chapitre ne correspond à aucun chapitre");
         }
     }
+////////////////////////////////////////////////////////////
 
-//////////////////////// Presentation ////////////////////////////////////
+    private void PlayPresVideo(int index){
+        if (index < presVideoClipList.Count && index >= 0){
+            PlayVideo(presVideoClipList[index]);
+        } 
+
+        else{
+            Debug.Log("l'indice vidéo dépasse le nombre de clip vidéo disponible");
+        }
+    }
+
+    private void PlaySupVideo(int index){
+        if (index < supVideoClipList.Count && index >= 0){
+            PlayVideo(supVideoClipList[index]);
+        } 
+
+        else{
+            Debug.Log("l'indice vidéo dépasse le nombre de clip vidéo disponible");
+        }
+    }
+
+    private void PlaySafVideo(int index){
+        if (index < safVideoClipList.Count && index >= 0){
+            PlayVideo(safVideoClipList[index]);
+        } 
+
+        else{
+            Debug.Log("l'indice vidéo dépasse le nombre de clip vidéo disponible");
+        }
+    }
+
+////////////////////////////////////////////////////////////
 
     public bool IsVideoPlayerPlaying(){
         return videoPlayer.isPlaying;
