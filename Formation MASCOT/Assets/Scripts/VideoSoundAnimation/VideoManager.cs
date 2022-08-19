@@ -17,6 +17,8 @@ public class VideoManager : MonoBehaviour
     public List<VideoClip> safVideoClipList;
     public List<VideoClip> premVideoClipList;
     public List<VideoClip> monVideoClipList;
+    public List<VideoClip> finVideoClipList;
+    public List<VideoClip> errVideoClipList;
 
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
@@ -86,6 +88,14 @@ public class VideoManager : MonoBehaviour
             PlayMonVideo(videoIndex);
         }
 
+        if (chapter == 6){
+            PlayFinVideo(videoIndex);
+        }
+
+        if (chapter == 7){
+            PlayErrVideo(videoIndex);
+        }
+
         else{
             Debug.Log("l'indice du chapitre ne correspond à aucun chapitre");
         }
@@ -135,6 +145,26 @@ public class VideoManager : MonoBehaviour
     private void PlayMonVideo(int index){
         if (index < monVideoClipList.Count && index >= 0){
             PlayVideo(monVideoClipList[index]);
+        } 
+
+        else{
+            Debug.Log("l'indice vidéo dépasse le nombre de clip vidéo disponible");
+        }
+    }
+
+    private void PlayFinVideo(int index){
+        if (index < finVideoClipList.Count && index >= 0){
+            PlayVideo(finVideoClipList[index]);
+        } 
+
+        else{
+            Debug.Log("l'indice vidéo dépasse le nombre de clip vidéo disponible");
+        }
+    }
+
+    private void PlayErrVideo(int index){
+        if (index < errVideoClipList.Count && index >= 0){
+            PlayVideo(errVideoClipList[index]);
         } 
 
         else{

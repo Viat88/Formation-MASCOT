@@ -12,7 +12,7 @@ public class StepButton : MonoBehaviour
     public void Supply(){
         PresManager.current.SetStep(name);
     }
-    
+
     public void Security(){
         SecurityManager.current.CheckEntry(name);
     }
@@ -23,5 +23,9 @@ public class StepButton : MonoBehaviour
 
     public void Montage(){
         MontageManager.current.CheckEntry(name);
+    }
+
+    public void FinMontage(){
+        FinMontageManager.current.CheckEntry(name);
     }
 }

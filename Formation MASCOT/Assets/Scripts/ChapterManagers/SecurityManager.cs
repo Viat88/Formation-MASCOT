@@ -168,6 +168,7 @@ public class SecurityManager : MonoBehaviour
         }
 
         if (step == 16 && IsPreviousStepFinished()){
+            step = 0;
             GlobalManager.current.IsCurrentChapterFinished = true;
         }
     }

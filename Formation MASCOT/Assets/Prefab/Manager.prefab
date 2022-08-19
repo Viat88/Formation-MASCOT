@@ -31,6 +31,99 @@ Transform:
   m_Father: {fileID: 8824596234346786412}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1858766402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1858766403}
+  - component: {fileID: 1858766404}
+  m_Layer: 0
+  m_Name: Error
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1858766403
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858766402}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7800682214840227450}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1858766404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858766402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6be5bf30c9f94e44fb10b8abf726faa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1930713307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1930713308}
+  - component: {fileID: 1930713309}
+  m_Layer: 0
+  m_Name: FinMontage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1930713308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930713307}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7800682214840227450}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1930713309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930713307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8791a310c7b39684a9148c53fe57c3d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endButtons: {fileID: 0}
+  arrow: {fileID: 0}
+  arrowPositionList:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &352495072618431689
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +303,11 @@ MonoBehaviour:
   - {fileID: 32900000, guid: 1fe22e50cf31b514ba3730a6cf7d946c, type: 3}
   - {fileID: 32900000, guid: 142e7fd673b45b74dbad402672c4a0de, type: 3}
   - {fileID: 32900000, guid: fedfe2b89b7427f44932d92066815701, type: 3}
+  finVideoClipList:
+  - {fileID: 32900000, guid: c3174d6dee7123d44a13426b29cb1604, type: 3}
+  - {fileID: 32900000, guid: bcb460b87b1fba9478fb47ca99e22e96, type: 3}
+  errVideoClipList:
+  - {fileID: 32900000, guid: d4d3940aea312fe498db9ae9adafb703, type: 3}
 --- !u!1 &2071843558896931143
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,6 +342,8 @@ Transform:
   - {fileID: 945688792133130337}
   - {fileID: 3955606961484169900}
   - {fileID: 8681419807731146852}
+  - {fileID: 1930713308}
+  - {fileID: 1858766403}
   m_Father: {fileID: 7081141414873774053}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -334,7 +434,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   premPhotoList: []
-  monPhotoList: []
+  monPhotoList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  finPhotoList:
+  - {fileID: 0}
+  errPhotoList:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &4985183393234476356
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,12 +534,12 @@ GameObject:
   - component: {fileID: 8681419807731146852}
   - component: {fileID: 7864108946846161117}
   m_Layer: 0
-  m_Name: MontageManager
+  m_Name: Montage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8681419807731146852
 Transform:
   m_ObjectHideFlags: 0
@@ -458,10 +567,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7990026edaa329c429c30cb568a1ce5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choiceButtonList: []
+  choiceButtonList:
+  - {fileID: 0}
+  - {fileID: 0}
   endButtons: {fileID: 0}
   arrow: {fileID: 0}
-  arrowPositionList: []
+  arrowPositionList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &7081141413425634247
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,6 +790,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5673f0aa713179442a585a16677e4b57, type: 3}
   - {fileID: 8300000, guid: 32c6ffe4d11a3c8409373488dca8a943, type: 3}
   - {fileID: 8300000, guid: e709f8e222b754a41bc0a0eef95bd9e0, type: 3}
+  finAudioClipList:
+  - {fileID: 8300000, guid: 3e69334abde5b6c4ca926c2adad8822b, type: 3}
+  - {fileID: 8300000, guid: 6abb63409f881f84c8bd312738ccda60, type: 3}
+  - {fileID: 8300000, guid: e3e7e684847e3604ea5f1b4268256091, type: 3}
+  - {fileID: 8300000, guid: ed31c67bb19505c4e9c2f0587daa766e, type: 3}
+  - {fileID: 8300000, guid: 80aec8591e9c1b94bacf5f6315820b99, type: 3}
+  - {fileID: 8300000, guid: 3c17b8466c71f1b4381cf0eabe2b1e21, type: 3}
+  errAudioClipList:
+  - {fileID: 8300000, guid: c61e74ec4d89db342a54d1aebe45ebd5, type: 3}
+  - {fileID: 8300000, guid: 5c7ab5748bb008648862c516d13b42e7, type: 3}
+  - {fileID: 8300000, guid: f58b42c8e7de1164899c72dd3e2acb82, type: 3}
 --- !u!1 &7081141413595102710
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,6 +853,7 @@ MonoBehaviour:
   - {fileID: 1234815309514945252}
   - {fileID: 8563714057328829449}
   - {fileID: 6608279515076318322}
+  - {fileID: 1930713307}
   chapterStartPosition: {fileID: 1306488161}
   isTransition: 0
   currentChapterFinished: 0

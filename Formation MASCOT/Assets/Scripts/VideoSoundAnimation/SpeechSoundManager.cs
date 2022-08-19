@@ -35,6 +35,11 @@ public class SpeechSoundManager : MonoBehaviour
     [Header ("Montage")]
     public List<AudioClip> monAudioClipList;
 
+    [Header ("Fin Montage")]
+    public List<AudioClip> finAudioClipList;
+
+    [Header ("Erreur")]
+    public List<AudioClip> errAudioClipList;
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -166,6 +171,34 @@ public class SpeechSoundManager : MonoBehaviour
 
         if (n < monAudioClipList.Count){
             PlaySound(monAudioClipList[n]);
+        }
+
+        else{
+            Debug.Log("Plus de vocaux supplémentaires");
+        }
+        
+    }
+
+//////////////////////// Fin Montage ////////////////////////////////////
+
+    public void PlayFinMontageClip(int n){
+
+        if (n < finAudioClipList.Count){
+            PlaySound(finAudioClipList[n]);
+        }
+
+        else{
+            Debug.Log("Plus de vocaux supplémentaires");
+        }
+        
+    }
+
+//////////////////////// Erreur ////////////////////////////////////
+
+    public void PlayErrMontageClip(int n){
+
+        if (n < errAudioClipList.Count){
+            PlaySound(errAudioClipList[n]);
         }
 
         else{

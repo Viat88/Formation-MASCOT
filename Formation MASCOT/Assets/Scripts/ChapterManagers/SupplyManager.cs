@@ -250,6 +250,7 @@ public class SupplyManager : MonoBehaviour
         }
 
         if (step == 27 && IsPreviousStepFinished()){
+            step = 0;
             GlobalManager.current.IsCurrentChapterFinished = true;
         }
 

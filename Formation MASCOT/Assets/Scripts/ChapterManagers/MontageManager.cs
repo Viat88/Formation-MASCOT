@@ -110,6 +110,7 @@ public class MontageManager : MonoBehaviour
         if (step == 2 && IsPreviousStepFinished()){
             PlaySpeech(1);
             ShowArrow(true);
+            MoveArrow(arrowPositionList[0].position);
             step += 1;
         }
 
@@ -322,6 +323,7 @@ public class MontageManager : MonoBehaviour
         }
 
         if (step == 35 && IsPreviousStepFinished()){
+            step = 0;
             GlobalManager.current.IsCurrentChapterFinished = true;
         }
 
