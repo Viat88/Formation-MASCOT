@@ -11,6 +11,8 @@ public class PhotoManager : MonoBehaviour
     public List<GameObject> presPhotoList;
     public List<GameObject> supPhotoList;
     public List<GameObject> safPhotoList;
+    public List<GameObject> premPhotoList;
+    public List<GameObject> monPhotoList;
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -63,6 +65,14 @@ public class PhotoManager : MonoBehaviour
             PlaySafPhoto(photoIndex);
         }
 
+        if (chapter == 4){
+            PlayPremPhoto(photoIndex);
+        }
+
+        if (chapter == 5){
+            PlayMonPhoto(photoIndex);
+        }
+
         else{
             Debug.Log("l'indice du chapitre ne correspond à aucun chapitre");
         }
@@ -98,6 +108,32 @@ public class PhotoManager : MonoBehaviour
 
         if (index < safPhotoList.Count && index >= 0){
             currentPhoto = safPhotoList[index];
+            ShowPhoto(true);
+        } 
+
+        else{
+            Debug.Log("l'indice photo dépasse le nombre de photo disponible");
+        }
+          
+    }
+
+    private void PlayPremPhoto(int index){
+
+        if (index < premPhotoList.Count && index >= 0){
+            currentPhoto = premPhotoList[index];
+            ShowPhoto(true);
+        } 
+
+        else{
+            Debug.Log("l'indice photo dépasse le nombre de photo disponible");
+        }
+          
+    }
+
+    private void PlayMonPhoto(int index){
+
+        if (index < monPhotoList.Count && index >= 0){
+            currentPhoto = monPhotoList[index];
             ShowPhoto(true);
         } 
 

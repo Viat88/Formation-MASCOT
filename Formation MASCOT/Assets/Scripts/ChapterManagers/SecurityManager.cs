@@ -129,7 +129,7 @@ public class SecurityManager : MonoBehaviour
 
         if (step == 10  && IsPreviousStepFinished()){
             
-            GlobalManager.current.HideScreen = true;
+            HideTheScreen(true);
 
             if (securityRewatch){
                 step = 13;
@@ -157,7 +157,7 @@ public class SecurityManager : MonoBehaviour
 
         if (step == 13  && IsPreviousStepFinished()){
             ShowFinalButtons(true);
-            GlobalManager.current.HideScreen = true;
+            HideTheScreen(true);
             step += 1;
         }
 
@@ -226,12 +226,16 @@ public class SecurityManager : MonoBehaviour
         return SpeechSoundManager.current.audioSource.isPlaying;
     }
 
+    private bool IsVideoPlayerPlaying(){
+        return VideoManager.current.IsVideoPlayerPlaying();
+    }
+
     private bool IsJamMoving(){
         return !MoveJam.current.HasFinished();
     }
 
     private bool IsPreviousStepFinished(){
-        return !IsAudioSourcePlaying() && !IsJamMoving();
+        return !IsAudioSourcePlaying() && !IsJamMoving() && !IsVideoPlayerPlaying();
     }
 
 ////////////////////////////////////////////////////////////

@@ -365,7 +365,7 @@ public class SupplyManager : MonoBehaviour
     }
 
     private bool HaveAllPartBeenSeen(){
-        return partSeenList[0] && partSeenList[1] && partSeenList[2] && partSeenList[3];
+        return !partSeenList.Contains(false);
     }
 
 ////////////////////////////////////////////////////////////

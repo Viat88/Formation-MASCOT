@@ -29,6 +29,12 @@ public class SpeechSoundManager : MonoBehaviour
     [Header ("Security")]
     public List<AudioClip> safAudioClipList;
 
+    [Header ("Premontage")]
+    public List<AudioClip> premAudioClipList;
+
+    [Header ("Montage")]
+    public List<AudioClip> monAudioClipList;
+
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -132,6 +138,34 @@ public class SpeechSoundManager : MonoBehaviour
 
         if (n < safAudioClipList.Count){
             PlaySound(safAudioClipList[n]);
+        }
+
+        else{
+            Debug.Log("Plus de vocaux supplémentaires");
+        }
+        
+    }
+
+//////////////////////// Premontage ////////////////////////////////////
+
+    public void PlayPremontageClip(int n){
+
+        if (n < premAudioClipList.Count){
+            PlaySound(premAudioClipList[n]);
+        }
+
+        else{
+            Debug.Log("Plus de vocaux supplémentaires");
+        }
+        
+    }
+
+//////////////////////// Montage ////////////////////////////////////
+
+    public void PlayMontageClip(int n){
+
+        if (n < monAudioClipList.Count){
+            PlaySound(monAudioClipList[n]);
         }
 
         else{
