@@ -39,7 +39,8 @@ public class PresManager : MonoBehaviour
 
     private bool isVideoRewatch = false;
     private bool isPhotoRewatch = false;
-    private List<Vector3> indexesSaveList;          // It saves the index of video, photo and speech at point where player can go back
+    public GameObject arrow;
+    public List<Transform> arrowPositionList;
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -59,7 +60,6 @@ public class PresManager : MonoBehaviour
     void Start()
     {
         GlobalManager.current.currentChapter = 1;
-        indexesSaveList = new List<Vector3>();
     }
 
     void Update()
@@ -77,24 +77,24 @@ public class PresManager : MonoBehaviour
             step += 1;
         }
 
-        if (step == 0 && MoveJam.current.HasFinished()){                                         // 1st available rewatch
+        if (step == 0 && IsPreviousStepFinished()){                                         // 1st available rewatch
 
             if (isPhotoRewatch){
                 step = 3;
             }
             else{
-                SpeechSoundManager.current.PlayPres01();
+                PlaySpeech(0);
                 step += 1;
             }
         }
 
-        if (step == 1 && !IsAudioSourcePlaying()){
-            SpeechSoundManager.current.PlayPres02();
+        if (step == 1 && IsPreviousStepFinished()){
+            PlaySpeech(1);
             PlayVideo(0);                                    // Play video Pres01
             step += 1;
         }
         
-        if (step == 2 && !IsAudioSourcePlaying() && !IsVideoPlayerPlaying()){
+        if (step == 2 && IsPreviousStepFinished()){
             
             // Player only wanted to see again video
             if(isVideoRewatch){
@@ -103,46 +103,55 @@ public class PresManager : MonoBehaviour
 
             // It's the first watch for player
             else{
-                SpeechSoundManager.current.PlayPres03();
+                PlaySpeech(2);
                 step += 1;
             }
         }
         
-        if (step == 3 && !IsAudioSourcePlaying()){              // 2nd available rewatch
+        if (step == 3 && IsPreviousStepFinished()){              // 2nd available rewatch
             PlayPhoto(0);
-            SpeechSoundManager.current.PlayPres04();
+            ShowArrow(true);
+            MoveArrow(arrowPositionList[0].position);
+            PlaySpeech(3);
             step += 1;
         }
 
-        if (step == 4 && !IsAudioSourcePlaying()){
+        if (step == 4 && IsPreviousStepFinished()){
             MoveJam.current.MoveJamToMirror();
             step += 1;
         }
 
-        if (step == 5 && MoveJam.current.HasFinished()){
-            SpeechSoundManager.current.PlayPres05();
+        if (step == 5 && IsPreviousStepFinished()){
+            MoveArrow(arrowPositionList[1].position);
+            PlaySpeech(4);
             step += 1;
         }
 
-        if (step == 6 && !IsAudioSourcePlaying()){
+        if (step == 6 && IsPreviousStepFinished()){
             PhotoManager.current.ShowPhoto(false);
+            ShowArrow(false);
             HideTheScreen(true);
             MoveJam.current.MoveJamToMiddle();
             step += 1;
         }
 
-        if (step == 7 && MoveJam.current.HasFinished()){
-            SpeechSoundManager.current.PlayPres06(); 
+        if (step == 7 && IsPreviousStepFinished()){
+            PlaySpeech(5); 
             step += 1;
         }
 
-        if (step == 8 && !IsAudioSourcePlaying()){
+        if (step == 8 && IsPreviousStepFinished()){
             ShowFinalButtons(true);
             step += 1;
         }
+
+        if (step == 10){
+            step = 0;
+            GlobalManager.current.IsCurrentChapterFinished = true;
+        }
     }
 
-////////////////////////////////////////////////////////////
+//////////////////////////// STEP FINISH ////////////////////////////////
 
     private bool IsAudioSourcePlaying(){
         return SpeechSoundManager.current.audioSource.isPlaying;
@@ -152,8 +161,15 @@ public class PresManager : MonoBehaviour
         return VideoManager.current.IsVideoPlayerPlaying();
     }
 
+    private bool IsJamMoving(){
+        return !MoveJam.current.HasFinished();
+    }
 
-////////////////////////////////////////////////////////////
+    private bool IsPreviousStepFinished(){
+        return !IsAudioSourcePlaying() && !IsVideoPlayerPlaying() && !IsJamMoving();
+    }
+
+/////////////////////////// PLAY /////////////////////////////////
 
     /*
         Play next video by telling to GlobalManager the new Index
@@ -177,6 +193,18 @@ public class PresManager : MonoBehaviour
         GlobalManager.current.PhotoIndex = GetList(photoIndex);
     }
 
+    /*
+        Play next speech by calling PlaySupplyClip of SpeechSoundManager
+        ENTRY:
+            speechIndex: int, the index of the speech
+        EXIT:
+            Nothing
+    */
+    private void PlaySpeech(int speechIndex){
+        SpeechSoundManager.current.PlayPresClip(speechIndex);
+    }
+
+//////////////////////////// INDEX ////////////////////////////////  
 
     private List<int> GetList(int n){
 
@@ -186,6 +214,8 @@ public class PresManager : MonoBehaviour
 
         return newIndex;
     }
+
+///////////////////////////// HIDE THE SCREEN ///////////////////////////////
 
     /*
         Says to Global Manager if we have to hide the screen
@@ -198,18 +228,28 @@ public class PresManager : MonoBehaviour
         GlobalManager.current.HideScreen = b;
     }
 
-////////////////////////////////////////////////////////////
+////////////////////////// ARROW //////////////////////////////////
+
+    private void MoveArrow(Vector3 targetPosition){
+        arrow.transform.position = targetPosition;
+    }
+
+    private void ShowArrow(bool b){
+        arrow.SetActive(b);
+    }
+
+///////////////////////// BUTTONS ///////////////////////////////////
 
     public void ShowFinalButtons(bool b){
         buttons.SetActive(b);
     }
 
-////////////////////////////////////////////////////////////
+//////////////////////////// ENTRY FROM BUTTONS ////////////////////////////////
 
-    public void SetStep(string s){
+    public void CheckEntry(string s){
 
-        if (s == "VideoButton" || s == "PhotoButton"){
-            RewatchPhotoOrVideo(s);
+        if (s == "VideoButton" || s == "PhotoButton" || s == "NextButton"){
+            SetStep(s);
         }
 
         else{
@@ -217,17 +257,22 @@ public class PresManager : MonoBehaviour
         }
     }
 
-    private void RewatchPhotoOrVideo(string s){
+    private void SetStep(string s){
 
         ShowFinalButtons(false);
-        step = -1;
-
+        
         if (s == "VideoButton"){
+            step = -1;
             isVideoRewatch = true;
         }
 
-        else{
+        if (s == "PhotoButton"){
+            step = -1;
             isPhotoRewatch = true;
+        }
+            
+        if (s == "NextButton"){
+            step = 10;
         }
     }
     

@@ -124,8 +124,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9210881815516630856}
-        m_TargetAssemblyTypeName: SupStepButton, Assembly-CSharp
-        m_MethodName: setStep
+        m_TargetAssemblyTypeName: StepButton, Assembly-CSharp
+        m_MethodName: Supply
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7051835483996257712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeec0f61d504e584dbe12820fb7677c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 34e6201954777e649afb886afd63e253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &1223288664410359049

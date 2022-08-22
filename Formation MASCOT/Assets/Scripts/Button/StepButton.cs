@@ -5,12 +5,15 @@ using UnityEngine;
 public class StepButton : MonoBehaviour
 {
 
+    public void Introduction(){
+        IntroManager.current.CheckEntry(name);
+    }
     public void Presentation(){
-        PresManager.current.SetStep(name);
+        PresManager.current.CheckEntry(name);
     }
 
     public void Supply(){
-        PresManager.current.SetStep(name);
+        SupplyManager.current.CheckEntry(name);
     }
 
     public void Security(){

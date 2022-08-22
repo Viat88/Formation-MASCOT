@@ -53,7 +53,7 @@ public class VideoManager : MonoBehaviour
         timeSinceStart += Time.deltaTime;
 
         if (timeSinceStart > timeToWait && !IsVideoPlayerPlaying()){
-            videoPlayer.Stop();
+            StopVideo();
         }        
     }
 
@@ -61,6 +61,10 @@ public class VideoManager : MonoBehaviour
         timeSinceStart = 0;
         videoPlayer.clip = video;
         videoPlayer.Play();
+    }
+
+    public void StopVideo(){
+        videoPlayer.Stop();
     }
 
     private void PlayIndexedVideo(List<int> indexList){
@@ -96,9 +100,6 @@ public class VideoManager : MonoBehaviour
             PlayErrVideo(videoIndex);
         }
 
-        else{
-            Debug.Log("l'indice du chapitre ne correspond à aucun chapitre");
-        }
     }
 ////////////////////////////////////////////////////////////
 

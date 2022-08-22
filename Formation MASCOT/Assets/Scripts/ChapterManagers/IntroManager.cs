@@ -13,10 +13,8 @@ public class IntroManager : MonoBehaviour
     */
 
    
-    public GameObject introCanvas;
-
-    [HideInInspector]
-    public int step = 1;
+    public GameObject nextButton;
+    private int step = 0;
 
 
 
@@ -39,8 +37,6 @@ public class IntroManager : MonoBehaviour
     void Start()
     {
         GlobalManager.current.currentChapter = 0;
-        SpeechSoundManager.current.PlayIntroSpeech();
-        
     }
 
 
@@ -53,28 +49,66 @@ public class IntroManager : MonoBehaviour
 ////////////////////////////////////////////////////////////
     private void ManageStep(){
 
-        if (step==1 && !SpeechSoundManager.current.audioSource.isPlaying){
-            introCanvas.SetActive(true);
+        if (step == 0){
+            PlaySpeech(0);
+            step += 1;
+        }
+
+        if (step==1 && IsPreviousStepFinished()){
+            ShowButton(true);
             step += 1;
         }
 
         if(step == 3){
-            introCanvas.SetActive(false);
-            SpeechSoundManager.current.PlayLastSentenceIntro();
+            ShowButton(false);
+            PlaySpeech(1);
             step += 1;
         }
             
-        if (step == 4 && !SpeechSoundManager.current.audioSource.isPlaying){
-            step=5;
+        if (step == 4 && IsPreviousStepFinished()){
+            step = 0;
             GlobalManager.current.IsCurrentChapterFinished= true;  
         }
 
     }
 
+/////////////////////////// PLAY /////////////////////////////////
 
-    public void StepPlusOne(){
-        step += 1;
+   /*
+        Play next speech by calling PlaySupplyClip of SpeechSoundManager
+        ENTRY:
+            speechIndex: int, the index of the speech
+        EXIT:
+            Nothing
+    */
+    private void PlaySpeech(int speechIndex){
+        SpeechSoundManager.current.PlayIntroClip(speechIndex);
     }
 
+//////////////////////////// STEP FINISH ////////////////////////////////
+
+    private bool IsAudioSourcePlaying(){
+        return SpeechSoundManager.current.audioSource.isPlaying;
+    }
+
+    private bool IsPreviousStepFinished(){
+        return !IsAudioSourcePlaying() ;
+    }
+
+///////////////////////// BUTTONS ///////////////////////////////////
+
+    private void ShowButton(bool b){
+        nextButton.SetActive(b);
+    }
+
+//////////////////////////// ENTRY FROM BUTTONS ////////////////////////////////
+    public void CheckEntry(string s){
+        if ( s == "NextButton" ){
+            step += 1;
+        }
+        else{
+            Debug.Log("Erreur: le string rentré en argument ne correspond pas à une des options");
+        }
+    }
 
 }

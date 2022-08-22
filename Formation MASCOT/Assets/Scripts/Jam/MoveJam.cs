@@ -52,7 +52,7 @@ public class MoveJam : MonoBehaviour
 
 ////////////////////////////////////////////////////////////
 
-    public void StartMoving(Vector3 positionToReach){
+    private void StartMoving(Vector3 positionToReach){
 
         targetPosition = positionToReach;
         step = 1;
@@ -94,6 +94,7 @@ public class MoveJam : MonoBehaviour
 ////////////////////////////////////////////////////////////
 
     private void RotateTowardTarget(){
+
         // Get the target Quaternion 
         Vector3 relativePos = targetPosition - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(relativePos);
@@ -136,15 +137,38 @@ public class MoveJam : MonoBehaviour
 ////////////////////////////////////////////////////////////
 
     public void MoveJamToStart(){
-        StartMoving(GlobalManager.current.GetChapterStartPosition());
+
+        if (!IsAtPosition(GetStartPosition())){
+            StartMoving(GlobalManager.current.GetChapterStartPosition());
+        }
     }
 
     public void MoveJamToMiddle(){
-        StartMoving( new Vector3 (0,0,transform.position.z) );
+
+        if (!IsAtPosition(new Vector3 (0,0,transform.position.z))){
+            StartMoving( new Vector3 (0,0,transform.position.z) );
+        }
     }
 
     public void MoveJamToMirror(){
+
+        if(!IsAtPosition(GetMirrorPosition())){
+            StartMoving ( GetMirrorPosition() );
+        }
+    }
+
+    private Vector3 GetMirrorPosition(){
         Vector3 startPosition = GlobalManager.current.GetChapterStartPosition();
-        StartMoving ( new Vector3 (-startPosition.x, 0, startPosition.z ) );
+        return new Vector3 (-startPosition.x, 0, startPosition.z );
+    }
+
+    private Vector3 GetStartPosition(){
+        return GlobalManager.current.GetChapterStartPosition();
+    }
+
+    private bool IsAtPosition(Vector3 v){
+        bool x = (transform.position.x - v.x >= -0.1 && transform.position.x - v.x <= 0.1);
+        bool z = (transform.position.z - v.z >= -0.1 && transform.position.z - v.z <= 0.1);
+        return x && z;
     }
 }

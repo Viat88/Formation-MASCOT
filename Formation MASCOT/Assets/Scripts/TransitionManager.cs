@@ -20,6 +20,11 @@ public class TransitionManager : MonoBehaviour
         7: Rotation finished + end transition
     */
 
+    public GameObject transitionCanva;
+    public List<GameObject> stepPictureList;
+    public float transitionDelay;
+    private float time;
+
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -55,6 +60,7 @@ public class TransitionManager : MonoBehaviour
         if(b){
             
             step = 1;
+            time = 0;
         }
 
         else{
@@ -65,14 +71,31 @@ public class TransitionManager : MonoBehaviour
 
     private void PlayTransition(){
 
+        time += Time.deltaTime;
+
         if (step == 1){
             MoveJam.current.MoveJamToStart();
+            PlayAnimation();
             step += 1;
         }
 
         if (step == 2 && MoveJam.current.HasFinished()){
-            StopTransition();
-            step = 0;
+
+            if (GetChapterDoneIndex() >=0){
+                if (time>transitionDelay){
+                    ShowTransitionCanva(false);
+                    DesactivateAnimations();
+                    StopTransition();
+                    step = 0;
+                }
+                
+            }
+
+            else{
+                StopTransition();
+                step = 0;
+            }
+            
         }        
     }
 
@@ -80,6 +103,51 @@ public class TransitionManager : MonoBehaviour
 
     private void StopTransition(){
         GlobalManager.current.IsTransition = false;
+    }
+
+////////////////////////////////////////////////////////////
+
+    private void PlayAnimation(){
+
+        if (GetChapterDoneIndex() >= 0){
+            ShowTransitionCanva( true );
+            GameObject currentPicture = GetStepPicture(GetChapterDoneIndex());
+            ShowVoile(true, currentPicture);
+            ActivateAnimation(currentPicture);
+        }
+
+    }
+
+////////////////////////////////////////////////////////////
+    private void ShowTransitionCanva(bool b){
+        transitionCanva.SetActive(b);
+    }
+
+    private void ShowVoile(bool b, GameObject g){
+        g.transform.Find("Voile").gameObject.SetActive(b);
+    }
+
+////////////////////////////////////////////////////////////
+
+    private void ActivateAnimation(GameObject g){
+        g.GetComponent<Animator>().enabled = true;
+    }
+
+    private void DesactivateAnimations(){
+
+        foreach(GameObject g in stepPictureList){
+            g.GetComponent<Animator>().enabled = false;
+        }
+    }
+
+////////////////////////////////////////////////////////////
+
+    private int GetChapterDoneIndex(){
+        return GlobalManager.current.currentChapter - 2;
+    }
+
+    private GameObject GetStepPicture(int n){
+        return stepPictureList[n];
     }
 
 }

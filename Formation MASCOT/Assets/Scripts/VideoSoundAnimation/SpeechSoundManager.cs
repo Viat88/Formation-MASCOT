@@ -8,20 +8,12 @@ public class SpeechSoundManager : MonoBehaviour
     public static SpeechSoundManager current;           // Unique SpeechSoundManager
     private string playerGender;
 
-    // Introduction
-    public AudioClip introSpeech;
-    public AudioClip lastSentenceIntro;
 
+    [Header ("Introduction")]
+    public List<AudioClip> introAudioClipList;
 
-    // Presentation
     [Header ("Presentation")]
-    public AudioClip Pres01;
-    public AudioClip Pres02;
-    public AudioClip Pres03;
-    public AudioClip Pres04;
-    public AudioClip Pres05;
-    public AudioClip Pres06Man;
-    public AudioClip Pres06Woman;
+    public List<AudioClip> presAudioClipList;
 
     [Header ("Supply")]
     public List<AudioClip> supAudioClipList;
@@ -81,44 +73,35 @@ public class SpeechSoundManager : MonoBehaviour
         playerGender = gender;
     }
 
-//////////////////////// Introduction ////////////////////////////////////
-
-    public void PlayIntroSpeech(){
-        PlaySound(introSpeech);
+    /* Stop the sound */
+    public void StopSound(){
+        audioSource.Stop();
     }
 
-    public void PlayLastSentenceIntro(){
-        PlaySound(lastSentenceIntro);
+//////////////////////// Introduction ////////////////////////////////////
+
+    public void PlayIntroClip(int n){
+
+        if (n < introAudioClipList.Count){
+            PlaySound(introAudioClipList[n]);
+        }
+
+        else{
+            Debug.Log("Plus de vocaux supplémentaires");
+        }
+        
     }
 
 //////////////////////// Presentation ////////////////////////////////////
 
-    public void PlayPres01(){
-        PlaySound(Pres01);
-    }
+    public void PlayPresClip(int n){
 
-    public void PlayPres02(){
-        PlaySound(Pres02);
-    }
-
-    public void PlayPres03(){
-        PlaySound(Pres03);
-    }
-
-    public void PlayPres04(){
-        PlaySound(Pres04);
-    }
-
-    public void PlayPres05(){
-        PlaySound(Pres05);
-    }
-
-    public void PlayPres06(){
-        if (playerGender == "man"){
-            PlaySound(Pres06Man);
+        if (n < presAudioClipList.Count){
+            PlaySound(presAudioClipList[n]);
         }
+
         else{
-            PlaySound(Pres06Woman);
+            Debug.Log("Plus de vocaux supplémentaires");
         }
         
     }

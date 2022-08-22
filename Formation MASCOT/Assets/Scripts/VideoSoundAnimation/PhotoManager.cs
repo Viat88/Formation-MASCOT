@@ -82,10 +82,6 @@ public class PhotoManager : MonoBehaviour
         if (chapter == 7){
             PlayErrPhoto(photoIndex);
         }
-
-        else{
-            Debug.Log("l'indice du chapitre ne correspond à aucun chapitre");
-        }
     }
 
 ////////////////////////////////////////////////////////////

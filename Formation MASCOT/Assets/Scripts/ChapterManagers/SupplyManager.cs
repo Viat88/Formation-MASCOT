@@ -269,7 +269,7 @@ public class SupplyManager : MonoBehaviour
         
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// PLAY /////////////////////////////////
 
     /*
         Play next video by telling to GlobalManager the new Index
@@ -308,7 +308,7 @@ public class SupplyManager : MonoBehaviour
         SpeechSoundManager.current.PlaySupplyClip(speechIndex);
     }
 
-////////////////////////////////////////////////////////////
+//////////////////////////// INDEX ////////////////////////////////  
 
     private List<int> GetList(int n){
 
@@ -319,7 +319,7 @@ public class SupplyManager : MonoBehaviour
         return newIndex;
     }
 
-////////////////////////////////////////////////////////////
+//////////////////////////// STEP FINISH ////////////////////////////////
 
     private bool IsAudioSourcePlaying(){
         return SpeechSoundManager.current.audioSource.isPlaying;
@@ -337,7 +337,7 @@ public class SupplyManager : MonoBehaviour
         return !IsAudioSourcePlaying() && !IsVideoPlayerPlaying() && !IsJamMoving();
     }
 
-////////////////////////////////////////////////////////////
+///////////////////////////// HIDE THE SCREEN ///////////////////////////////
 
     /*
         Says to Global Manager if we have to hide the screen
@@ -350,7 +350,7 @@ public class SupplyManager : MonoBehaviour
         GlobalManager.current.HideScreen = b;
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// PART SEEN LIST /////////////////////////////////
 
     private void InitialisePartSeenList(){
 
@@ -369,7 +369,7 @@ public class SupplyManager : MonoBehaviour
         return !partSeenList.Contains(false);
     }
 
-////////////////////////////////////////////////////////////
+////////////////////////// ARROW //////////////////////////////////
 
     private void MoveArrow(Vector3 targetPosition){
         arrow.transform.position = targetPosition;
@@ -379,7 +379,7 @@ public class SupplyManager : MonoBehaviour
         arrow.SetActive(b);
     }
 
-////////////////////////////////////////////////////////////
+///////////////////////// BUTTONS ///////////////////////////////////
 
     private void ShowButton(int n, bool b){
         stepButtonList[n].gameObject.SetActive(b);
@@ -404,9 +404,9 @@ public class SupplyManager : MonoBehaviour
         nextButton.interactable = b;
     }
 
-////////////////////////////////////////////////////////////
+//////////////////////////// ENTRY FROM BUTTONS ////////////////////////////////
 
-    public void ListenButtons(string s){
+    public void CheckEntry(string s){
         if (s == "Fiche" || s == "Carroussel" || s == "MOS" || s == "Circuits" || s == "NextButton"){
             SetStep(s);
         }
