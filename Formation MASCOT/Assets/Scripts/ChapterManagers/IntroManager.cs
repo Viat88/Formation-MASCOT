@@ -15,6 +15,7 @@ public class IntroManager : MonoBehaviour
    
     public GameObject nextButton;
     private int step = 0;
+    private bool isGamePaused;
 
 
 
@@ -31,7 +32,7 @@ public class IntroManager : MonoBehaviour
             Destroy(obj: this);
         }
 
-        
+        GlobalManager.OnGameStateChanged += IsGamePaused;
     }
 
     void Start()
@@ -42,9 +43,16 @@ public class IntroManager : MonoBehaviour
 
     void Update()
     {
-       ManageStep();
+       if (!isGamePaused){
+            ManageStep();
+        }
     }
 
+////////////////////////////////////////////////////////////
+
+    private void IsGamePaused(GameState state){
+        isGamePaused = (state == GameState.Paused);
+    }
 
 ////////////////////////////////////////////////////////////
     private void ManageStep(){

@@ -24,6 +24,7 @@ public class FinMontageManager : MonoBehaviour
     public GameObject endButtons;
     public GameObject arrow;
     public List<Transform> arrowPositionList;
+    private bool isGamePaused;
     
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
@@ -38,6 +39,8 @@ public class FinMontageManager : MonoBehaviour
         {
             Destroy(obj: this);
         }
+
+        GlobalManager.OnGameStateChanged += IsGamePaused;
     }
 
     void Start()
@@ -47,7 +50,15 @@ public class FinMontageManager : MonoBehaviour
 
     void Update()
     {
-        ManageStep();
+        if (!isGamePaused){
+            ManageStep();
+        }
+    }
+    
+////////////////////////////////////////////////////////////
+
+    private void IsGamePaused(GameState state){
+        isGamePaused = (state == GameState.Paused);
     }
 
 ////////////////////////////////////////////////////////////

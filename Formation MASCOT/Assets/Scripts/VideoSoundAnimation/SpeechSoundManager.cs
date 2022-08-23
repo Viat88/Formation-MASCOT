@@ -33,6 +33,7 @@ public class SpeechSoundManager : MonoBehaviour
     public List<AudioClip> errAudioClipList;
     [Header ("End")]
     public List<AudioClip> endAudioClipList;
+    private bool isGamePaused;
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -46,23 +47,45 @@ public class SpeechSoundManager : MonoBehaviour
         {
             Destroy(obj: this);
         }
+
+        GlobalManager.OnGameStateChanged += IsGamePaused;
     }
 
 
     void Update(){
-        if (!audioSource.isPlaying){
-            audioSource.Pause();
+        
+        if (!audioSource.isPlaying && !isGamePaused){
+            RemoveClip();
         }
+        
     }
 
+////////////////////////////////////////////////////////////
+
+    private void IsGamePaused(GameState state){
+
+        if (state == GameState.Paused){
+            PauseSound();
+        }
+
+        if (state == GameState.Running){
+            PlaySound();
+        }
+
+        isGamePaused = (state == GameState.Paused);
+    }
 
 ////////////////////////////////////////////////////////////
 
 
-    /* Play the sound entered */
-    private void PlaySound(AudioClip newClip)
+    /* Change the sound */
+    private void ChangeClip(AudioClip newClip)
     {
         audioSource.clip = newClip;
+        PlaySound();
+    }
+
+    private void PlaySound(){
         audioSource.Play();
     }
 
@@ -72,12 +95,21 @@ public class SpeechSoundManager : MonoBehaviour
         audioSource.Stop();
     }
 
+    /* Pause the sound */
+    public void PauseSound(){
+        audioSource.Pause();
+    }
+
+    public void RemoveClip(){
+        audioSource.clip = null;
+    }
+
 //////////////////////// Introduction ////////////////////////////////////
 
     public void PlayIntroClip(int n){
 
         if (n < introAudioClipList.Count){
-            PlaySound(introAudioClipList[n]);
+            ChangeClip(introAudioClipList[n]);
         }
 
         else{
@@ -90,7 +122,7 @@ public class SpeechSoundManager : MonoBehaviour
     public void PlayPresClip(int n){
 
         if (n < presAudioClipList.Count){
-            PlaySound(presAudioClipList[n]);
+            ChangeClip(presAudioClipList[n]);
         }
 
         else{
@@ -103,7 +135,7 @@ public class SpeechSoundManager : MonoBehaviour
     public void PlaySupplyClip(int n){
 
         if (n < supAudioClipList.Count){
-            PlaySound(supAudioClipList[n]);
+            ChangeClip(supAudioClipList[n]);
         }
 
         else{
@@ -116,7 +148,7 @@ public class SpeechSoundManager : MonoBehaviour
     public void PlaySecurityClip(int n){
 
         if (n < safAudioClipList.Count){
-            PlaySound(safAudioClipList[n]);
+            ChangeClip(safAudioClipList[n]);
         }
 
         else{
@@ -129,7 +161,7 @@ public class SpeechSoundManager : MonoBehaviour
     public void PlayPremontageClip(int n){
 
         if (n < premAudioClipList.Count){
-            PlaySound(premAudioClipList[n]);
+            ChangeClip(premAudioClipList[n]);
         }
 
         else{
@@ -142,7 +174,7 @@ public class SpeechSoundManager : MonoBehaviour
     public void PlayMontageClip(int n){
 
         if (n < monAudioClipList.Count){
-            PlaySound(monAudioClipList[n]);
+            ChangeClip(monAudioClipList[n]);
         }
 
         else{
@@ -155,7 +187,7 @@ public class SpeechSoundManager : MonoBehaviour
     public void PlayFinMontageClip(int n){
 
         if (n < finAudioClipList.Count){
-            PlaySound(finAudioClipList[n]);
+            ChangeClip(finAudioClipList[n]);
         }
 
         else{
@@ -168,7 +200,7 @@ public class SpeechSoundManager : MonoBehaviour
     public void PlayErrMontageClip(int n){
 
         if (n < errAudioClipList.Count){
-            PlaySound(errAudioClipList[n]);
+            ChangeClip(errAudioClipList[n]);
         }
 
         else{
@@ -181,7 +213,7 @@ public class SpeechSoundManager : MonoBehaviour
     public void PlayEndClip(int n){
 
         if (n < endAudioClipList.Count){
-            PlaySound(endAudioClipList[n]);
+            ChangeClip(endAudioClipList[n]);
         }
 
         else{

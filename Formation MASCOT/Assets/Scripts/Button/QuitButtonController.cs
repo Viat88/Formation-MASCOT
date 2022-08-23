@@ -7,13 +7,11 @@ public class QuitButtonController : MonoBehaviour
     public GameObject quitCanvas;
     public void ShowCanvas(){
         quitCanvas.SetActive(true);
-        Time.timeScale = 0;
-        SpeechSoundManager.current.audioSource.Pause();
+        GlobalManager.current.UpdateGameState(GameState.Paused);
     }
 
     public void HideCanvas(){
         quitCanvas.SetActive(false);
-        Time.timeScale = 1;
-        SpeechSoundManager.current.audioSource.Play();
+        GlobalManager.current.UpdateGameState(GameState.Running);
     }
 }

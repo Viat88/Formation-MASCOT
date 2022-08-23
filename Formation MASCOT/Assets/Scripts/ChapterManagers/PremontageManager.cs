@@ -37,6 +37,7 @@ public class PremontageManager : MonoBehaviour
     private List<bool> partSeenList; // List of four element, one for each part (fiche, Carroussel, MOS, Circuits) to know if they have been seen
     public List<Button> stepButtonList;
     public Button nextButton;
+    private bool isGamePaused;
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -50,6 +51,7 @@ public class PremontageManager : MonoBehaviour
         {
             Destroy(obj: this);
         }
+        GlobalManager.OnGameStateChanged += IsGamePaused;
     }
 
     void Start()
@@ -60,7 +62,15 @@ public class PremontageManager : MonoBehaviour
 
     void Update()
     {
-        ManageStep();
+        if (!isGamePaused){
+            ManageStep();
+        }
+    }
+
+////////////////////////////////////////////////////////////
+
+    private void IsGamePaused(GameState state){
+        isGamePaused = (state == GameState.Paused);
     }
 
 ////////////////////////////////////////////////////////////

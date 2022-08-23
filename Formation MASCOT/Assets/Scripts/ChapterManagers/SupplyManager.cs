@@ -56,6 +56,7 @@ public class SupplyManager : MonoBehaviour
     public List<Transform> arrowPositionList;
     public List<Button> stepButtonList;
     public Button nextButton;
+    private bool isGamePaused;
 
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
@@ -70,6 +71,7 @@ public class SupplyManager : MonoBehaviour
         {
             Destroy(obj: this);
         }
+        GlobalManager.OnGameStateChanged += IsGamePaused;
     }
 
     void Start()
@@ -80,7 +82,15 @@ public class SupplyManager : MonoBehaviour
 
     void Update()
     {
-        ManageStep();
+        if (!isGamePaused){
+            ManageStep();
+        }
+    }
+
+////////////////////////////////////////////////////////////
+
+    private void IsGamePaused(GameState state){
+        isGamePaused = (state == GameState.Paused);
     }
 
 ////////////////////////////////////////////////////////////
@@ -273,6 +283,7 @@ public class SupplyManager : MonoBehaviour
         }
         
     }
+
 
 /////////////////////////// PLAY /////////////////////////////////
 

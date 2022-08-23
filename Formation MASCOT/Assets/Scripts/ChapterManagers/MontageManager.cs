@@ -66,6 +66,7 @@ public class MontageManager : MonoBehaviour
 
     private bool computerRewatch = false;
     private bool suivantRewatch = false;
+    private bool isGamePaused;
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -79,6 +80,8 @@ public class MontageManager : MonoBehaviour
         {
             Destroy(obj: this);
         }
+
+        GlobalManager.OnGameStateChanged += IsGamePaused;
     }
     
     void Start()
@@ -89,7 +92,14 @@ public class MontageManager : MonoBehaviour
 
     void Update()
     {
-        ManageStep();
+        if (!isGamePaused){
+            ManageStep();
+        }
+    }
+////////////////////////////////////////////////////////////
+
+    private void IsGamePaused(GameState state){
+        isGamePaused = (state == GameState.Paused);
     }
 
 ////////////////////////////////////////////////////////////

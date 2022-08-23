@@ -40,6 +40,7 @@ public class SecurityManager : MonoBehaviour
     private List<GameObject> responses;
     private bool securityRewatch = false;
     public GameObject finalButtons;
+    private bool isGamePaused;
 
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
@@ -54,6 +55,7 @@ public class SecurityManager : MonoBehaviour
         {
             Destroy(obj: this);
         }
+        GlobalManager.OnGameStateChanged += IsGamePaused;
     }
 
     void Start()
@@ -65,7 +67,15 @@ public class SecurityManager : MonoBehaviour
 
     void Update()
     {
-        ManageStep();
+        if (!isGamePaused){
+            ManageStep();
+        }
+    }
+
+////////////////////////////////////////////////////////////
+
+    private void IsGamePaused(GameState state){
+        isGamePaused = (state == GameState.Paused);
     }
 
 ////////////////////////////////////////////////////////////

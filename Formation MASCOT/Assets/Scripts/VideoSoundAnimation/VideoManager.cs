@@ -20,6 +20,8 @@ public class VideoManager : MonoBehaviour
     public List<VideoClip> finVideoClipList;
     public List<VideoClip> errVideoClipList;
 
+    private bool isGamePaused;
+
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -33,6 +35,8 @@ public class VideoManager : MonoBehaviour
         {
             Destroy(obj: this);
         }
+
+        GlobalManager.OnGameStateChanged += IsGamePaused;
     }
 
     void Start()
@@ -43,7 +47,25 @@ public class VideoManager : MonoBehaviour
 
     void Update()
     {
-        RemoveVideo();
+        if (!isGamePaused){
+            RemoveVideo();
+        }
+        
+    }
+
+////////////////////////////////////////////////////////////
+
+    private void IsGamePaused(GameState state){
+
+        if (state == GameState.Paused){
+            PauseVideo();
+        }
+
+        if (state == GameState.Running){
+            PlayVideo();
+        }
+
+        isGamePaused = (state == GameState.Paused);
     }
 
 ////////////////////////////////////////////////////////////
@@ -57,14 +79,21 @@ public class VideoManager : MonoBehaviour
         }        
     }
 
-    private void PlayVideo(VideoClip video){
+    private void ChangeClip(VideoClip video){
         timeSinceStart = 0;
         videoPlayer.clip = video;
+    }
+
+    public void PlayVideo(){
         videoPlayer.Play();
     }
 
     public void StopVideo(){
         videoPlayer.Stop();
+    }
+
+    public void PauseVideo(){
+        videoPlayer.Pause();
     }
 
     private void PlayIndexedVideo(List<int> indexList){
@@ -105,7 +134,7 @@ public class VideoManager : MonoBehaviour
 
     private void PlayPresVideo(int index){
         if (index < presVideoClipList.Count && index >= 0){
-            PlayVideo(presVideoClipList[index]);
+            ChangeClip(presVideoClipList[index]);
         } 
 
         else{
@@ -115,7 +144,7 @@ public class VideoManager : MonoBehaviour
 
     private void PlaySupVideo(int index){
         if (index < supVideoClipList.Count && index >= 0){
-            PlayVideo(supVideoClipList[index]);
+            ChangeClip(supVideoClipList[index]);
         } 
 
         else{
@@ -125,7 +154,7 @@ public class VideoManager : MonoBehaviour
 
     private void PlaySafVideo(int index){
         if (index < safVideoClipList.Count && index >= 0){
-            PlayVideo(safVideoClipList[index]);
+            ChangeClip(safVideoClipList[index]);
         } 
 
         else{
@@ -135,7 +164,7 @@ public class VideoManager : MonoBehaviour
 
     private void PlayPremVideo(int index){
         if (index < premVideoClipList.Count && index >= 0){
-            PlayVideo(premVideoClipList[index]);
+            ChangeClip(premVideoClipList[index]);
         } 
 
         else{
@@ -145,7 +174,7 @@ public class VideoManager : MonoBehaviour
 
     private void PlayMonVideo(int index){
         if (index < monVideoClipList.Count && index >= 0){
-            PlayVideo(monVideoClipList[index]);
+            ChangeClip(monVideoClipList[index]);
         } 
 
         else{
@@ -155,7 +184,7 @@ public class VideoManager : MonoBehaviour
 
     private void PlayFinVideo(int index){
         if (index < finVideoClipList.Count && index >= 0){
-            PlayVideo(finVideoClipList[index]);
+            ChangeClip(finVideoClipList[index]);
         } 
 
         else{
@@ -165,7 +194,7 @@ public class VideoManager : MonoBehaviour
 
     private void PlayErrVideo(int index){
         if (index < errVideoClipList.Count && index >= 0){
-            PlayVideo(errVideoClipList[index]);
+            ChangeClip(errVideoClipList[index]);
         } 
 
         else{

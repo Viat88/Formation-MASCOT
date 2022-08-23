@@ -13,6 +13,9 @@ public class GlobalManager : MonoBehaviour
     public Transform chapterStartPosition;
     private bool finished = false;
 
+    public GameState State;
+    public static event Action<GameState> OnGameStateChanged;
+
 ///////////////////////// Listeners ///////////////////////////////////  
     
     /*
@@ -130,6 +133,7 @@ public class GlobalManager : MonoBehaviour
 
     void Start()
     {
+        UpdateGameState(GameState.Running);
         this.OnCurrentChapterFinished += ChapterFinished;
         this.OnIsTransitionChanged += TransitionFinished;
     }
@@ -184,4 +188,37 @@ public class GlobalManager : MonoBehaviour
     public Vector3 GetChapterStartPosition(){
         return chapterStartPosition.position;
     }
+
+/////////////////////////// Game State /////////////////////////////////
+
+    public void UpdateGameState(GameState newState){
+        State = newState;
+
+        switch (newState){
+
+            case GameState.Running:
+                Time.timeScale = 1;
+                break;
+
+            case GameState.Paused:
+                Time.timeScale = 0;
+                break;
+
+            default:
+                throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
+
+        }
+
+        OnGameStateChanged?.Invoke(newState);
+    }
+}
+
+
+
+
+
+
+public enum GameState{
+    Running,
+    Paused
 }

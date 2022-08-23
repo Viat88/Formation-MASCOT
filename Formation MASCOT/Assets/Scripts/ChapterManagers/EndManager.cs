@@ -11,6 +11,7 @@ public class EndManager : MonoBehaviour
     public GameObject canva;
     public List<Button> buttonsList;
     private int chapterChoosen;
+    private bool isGamePaused;
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -24,6 +25,8 @@ public class EndManager : MonoBehaviour
         {
             Destroy(obj: this);
         }
+
+        GlobalManager.OnGameStateChanged += IsGamePaused;
     }
 
     void Start()
@@ -32,11 +35,18 @@ public class EndManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ManageStep();
+        if (!isGamePaused){
+            ManageStep();
+        }
     }
 
 ////////////////////////////////////////////////////////////
 
+    private void IsGamePaused(GameState state){
+        isGamePaused = (state == GameState.Paused);
+    }
+
+/////////////////////////// Manage Steps /////////////////////////////////
     private void ManageStep(){
 
         if (step == 0){

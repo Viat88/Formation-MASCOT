@@ -15,6 +15,7 @@ public class ErrorManager : MonoBehaviour
         5: HIDE picture err02 + HIDE screen + MOVE Jam to middle
     */
     private int step = 0;
+    private bool isGamePaused;
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -28,6 +29,7 @@ public class ErrorManager : MonoBehaviour
         {
             Destroy(obj: this);
         }
+        GlobalManager.OnGameStateChanged += IsGamePaused;
     }
 
     void Start()
@@ -37,7 +39,14 @@ public class ErrorManager : MonoBehaviour
 
     void Update()
     {
-        ManageStep();
+        if (!isGamePaused){
+            ManageStep();
+        }
+    }
+////////////////////////////////////////////////////////////
+
+    private void IsGamePaused(GameState state){
+        isGamePaused = (state == GameState.Paused);
     }
 
 ////////////////////////////////////////////////////////////
