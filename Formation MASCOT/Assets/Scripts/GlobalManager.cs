@@ -7,10 +7,11 @@ public class GlobalManager : MonoBehaviour
 {
 
     public static GlobalManager current;           // Unique GlobalManager
-    [HideInInspector]
+    //[HideInInspector]
     public int currentChapter = 1;
     public List<GameObject> chapterList;
     public Transform chapterStartPosition;
+    private bool finished = false;
 
 ///////////////////////// Listeners ///////////////////////////////////  
     
@@ -50,26 +51,6 @@ public class GlobalManager : MonoBehaviour
         {
             currentChapterFinished = value;
             CurrentChapterFinished(currentChapterFinished); //Fire the event
-        }
-    }
-
-
-    /*
-        Listener about the player's gender
-    */
-    public event Action<String> OnGenderChanged;
-    public void GenderChanged(string s){
-        OnGenderChanged?.Invoke(s);
-    }
-
-    [HideInInspector]
-    public String playerGender = "man";
-    public String PlayerGender{
-        get => playerGender;
-        set
-        {
-            playerGender = value;
-            GenderChanged(playerGender); //Fire the event
         }
     }
 
@@ -161,8 +142,16 @@ public class GlobalManager : MonoBehaviour
 
     private void ChapterFinished(bool b){
         if (b){
-            chapterList[currentChapter].SetActive(false);                    
-            IsTransition = true;  
+            chapterList[currentChapter].SetActive(false);
+
+            if (!finished){
+                IsTransition = true;  
+            }  
+
+            else{
+                currentChapter = chapterList.Count - 1;
+                chapterList[currentChapter].SetActive(true);
+            }               
         }
     }
 
@@ -174,8 +163,14 @@ public class GlobalManager : MonoBehaviour
 
     private void ChangeCurrentChapter(){
 
-        if (currentChapter + 1 <chapterList.Count ){
+        if (currentChapter + 1 < chapterList.Count ){
+
             currentChapter += 1;
+
+            if (currentChapter + 1 == chapterList.Count){                   // Last chapter (not a real one)
+                finished = true;
+            }
+
             chapterList[currentChapter].SetActive(true);
         }
         else{

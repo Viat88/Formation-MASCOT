@@ -14,7 +14,6 @@ public class InputManager : MonoBehaviour
 
     private void CheckEntry(){
         if (Input.GetKeyDown("right")){
-            Debug.Log("ok");
             Pass();
         }
     }

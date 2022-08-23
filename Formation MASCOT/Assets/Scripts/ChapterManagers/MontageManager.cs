@@ -319,7 +319,6 @@ public class MontageManager : MonoBehaviour
         if (step == 33 && IsPreviousStepFinished()){
             ShowEndButtons(true);
             step += 1;
-            Debug.Log("ok");
         }
 
         if (step == 35 && IsPreviousStepFinished()){

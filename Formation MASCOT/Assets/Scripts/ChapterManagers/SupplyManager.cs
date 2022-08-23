@@ -151,114 +151,119 @@ public class SupplyManager : MonoBehaviour
             step += 1;
         }
 
-        if (step == 11 && IsPreviousStepFinished()){
+        if (step==11 && IsPreviousStepFinished()){
+            PlaySpeech(8);
+            step += 1;
+        }
+
+        if (step == 12 && IsPreviousStepFinished()){
             SetElementPartSeenList(0, true);
-            step = 28;
+            step = 29;
         }
 
 
 
-        if (step == 12){
-            PlaySpeech(8);
+        if (step == 13){
+            PlaySpeech(9);
             PlayVideo(3);
             step += 1;
         }
 
-        if (step == 13 && IsPreviousStepFinished()){
+        if (step == 14 && IsPreviousStepFinished()){
             SetElementPartSeenList(1, true);
-            step = 28;
+            step = 29;
         }
 
 
 
 
-        if (step == 14){
-            PlaySpeech(9);
+        if (step == 15){
+            PlaySpeech(10);
             PlayPhoto(1);               // Equal to photo 2 and 3
             step += 1;
         }
 
-        if (step == 15 && IsPreviousStepFinished()){
+        if (step == 16 && IsPreviousStepFinished()){
             PhotoManager.current.ShowPhoto(false);
-            PlaySpeech(10);
+            PlaySpeech(11);
             PlayVideo(4);
             step += 1;
         }
 
-        if (step == 16 && IsPreviousStepFinished()){
-            PlaySpeech(11);
+        if (step == 17 && IsPreviousStepFinished()){
+            PlaySpeech(12);
             PlayVideo(5);
             step += 1;
         }
 
-        if (step == 17 && IsPreviousStepFinished()){
+        if (step == 18 && IsPreviousStepFinished()){
             SetElementPartSeenList(2, true);
-            step = 28;
+            step = 29;
         }
 
 
 
-        if (step == 18){
-            PlaySpeech(12);
-            PlayVideo(6);
-            step += 1;
-        }
-
-        if (step == 19 && IsPreviousStepFinished()){
+        if (step == 19){
             PlaySpeech(13);
+            PlayVideo(6);
             step += 1;
         }
 
         if (step == 20 && IsPreviousStepFinished()){
             PlaySpeech(14);
-            PlayVideo(7);
             step += 1;
         }
 
         if (step == 21 && IsPreviousStepFinished()){
             PlaySpeech(15);
-            PlayVideo(8);
+            PlayVideo(7);
             step += 1;
         }
 
         if (step == 22 && IsPreviousStepFinished()){
-            SetElementPartSeenList(3, true);
-            step = 28;
+            PlaySpeech(16);
+            PlayVideo(8);
+            step += 1;
         }
 
-        if (step == 23){
+        if (step == 23 && IsPreviousStepFinished()){
+            SetElementPartSeenList(3, true);
+            step = 29;
+        }
+
+        if (step == 24){
             MoveJam.current.MoveJamToMiddle();
             step += 1;
         }
 
-        if (step == 24 && IsPreviousStepFinished()){
-            PlaySpeech(16);
+        if (step == 25 && IsPreviousStepFinished()){
+            PlaySpeech(17);
             step += 1;
         }
 
-        if (step == 25 && IsPreviousStepFinished()){
+        if (step == 26 && IsPreviousStepFinished()){
             ShowNextButton(true);
             ShowButtons(true);
             step = 6;
         }
 
-        if (step == 26){
+        if (step == 27){
             ShowButtons(false);
             ShowNextButton(false);
-            PlaySpeech(17);
+            PlaySpeech(18);
             step += 1;
         }
 
-        if (step == 27 && IsPreviousStepFinished()){
+        if (step == 28 && IsPreviousStepFinished()){
             step = 0;
             GlobalManager.current.IsCurrentChapterFinished = true;
         }
 
-        if (step == 28){
+        if (step == 29){
             GlobalManager.current.HideScreen = true;
               
             if (HaveAllPartBeenSeen()){
-                step = 23;
+                step = 24;
             }   
 
             else{
@@ -424,19 +429,19 @@ public class SupplyManager : MonoBehaviour
         }
 
         if (s == "Carroussel"){
-            step = 12;
+            step = 13;
         }
 
         if (s == "MOS"){
-            step = 14;
+            step = 15;
         }
 
         if (s == "Circuits"){
-            step = 18;
+            step = 19;
         }
 
         if (s == "NextButton"){
-            step = 26;
+            step = 27;
         }
     }
 }

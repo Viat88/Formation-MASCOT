@@ -6,7 +6,6 @@ public class SpeechSoundManager : MonoBehaviour
 {
     public AudioSource audioSource;
     public static SpeechSoundManager current;           // Unique SpeechSoundManager
-    private string playerGender;
 
 
     [Header ("Introduction")]
@@ -32,6 +31,8 @@ public class SpeechSoundManager : MonoBehaviour
 
     [Header ("Erreur")]
     public List<AudioClip> errAudioClipList;
+    [Header ("End")]
+    public List<AudioClip> endAudioClipList;
 
 ///////////////////////// START FUNCTIONS ///////////////////////////////////
 
@@ -47,10 +48,6 @@ public class SpeechSoundManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        GlobalManager.current.OnGenderChanged += SetGender;
-    }
 
     void Update(){
         if (!audioSource.isPlaying){
@@ -63,15 +60,12 @@ public class SpeechSoundManager : MonoBehaviour
 
 
     /* Play the sound entered */
-    private void PlaySound(AudioClip clip)
+    private void PlaySound(AudioClip newClip)
     {
-        audioSource.PlayOneShot(clip);
+        audioSource.clip = newClip;
+        audioSource.Play();
     }
 
-    /* Set player's gender*/
-    private void SetGender(string gender){
-        playerGender = gender;
-    }
 
     /* Stop the sound */
     public void StopSound(){
@@ -89,7 +83,6 @@ public class SpeechSoundManager : MonoBehaviour
         else{
             Debug.Log("Plus de vocaux supplémentaires");
         }
-        
     }
 
 //////////////////////// Presentation ////////////////////////////////////
@@ -103,7 +96,6 @@ public class SpeechSoundManager : MonoBehaviour
         else{
             Debug.Log("Plus de vocaux supplémentaires");
         }
-        
     }
 
 //////////////////////// Supply ////////////////////////////////////
@@ -117,7 +109,6 @@ public class SpeechSoundManager : MonoBehaviour
         else{
             Debug.Log("Plus de vocaux supplémentaires");
         }
-        
     }
 
 //////////////////////// Security ////////////////////////////////////
@@ -131,7 +122,6 @@ public class SpeechSoundManager : MonoBehaviour
         else{
             Debug.Log("Plus de vocaux supplémentaires");
         }
-        
     }
 
 //////////////////////// Premontage ////////////////////////////////////
@@ -145,7 +135,6 @@ public class SpeechSoundManager : MonoBehaviour
         else{
             Debug.Log("Plus de vocaux supplémentaires");
         }
-        
     }
 
 //////////////////////// Montage ////////////////////////////////////
@@ -159,7 +148,6 @@ public class SpeechSoundManager : MonoBehaviour
         else{
             Debug.Log("Plus de vocaux supplémentaires");
         }
-        
     }
 
 //////////////////////// Fin Montage ////////////////////////////////////
@@ -173,7 +161,6 @@ public class SpeechSoundManager : MonoBehaviour
         else{
             Debug.Log("Plus de vocaux supplémentaires");
         }
-        
     }
 
 //////////////////////// Erreur ////////////////////////////////////
@@ -186,8 +173,20 @@ public class SpeechSoundManager : MonoBehaviour
 
         else{
             Debug.Log("Plus de vocaux supplémentaires");
+        } 
+    }
+
+//////////////////////// End ////////////////////////////////////
+
+    public void PlayEndClip(int n){
+
+        if (n < endAudioClipList.Count){
+            PlaySound(endAudioClipList[n]);
         }
-        
+
+        else{
+            Debug.Log("Plus de vocaux supplémentaires");
+        } 
     }
 
 }

@@ -31,4 +31,8 @@ public class StepButton : MonoBehaviour
     public void FinMontage(){
         FinMontageManager.current.CheckEntry(name);
     }
+
+    public void End(){
+        EndManager.current.CheckEntry(name);
+    }
 }

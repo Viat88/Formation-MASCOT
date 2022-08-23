@@ -81,6 +81,11 @@ public class ErrorManager : MonoBehaviour
             step += 1;
         }
 
+        if (step == 6 && IsPreviousStepFinished()){
+            GlobalManager.current.IsCurrentChapterFinished = true;
+            step = 0;
+        }
+
     }
 
 /////////////////////////// PLAY /////////////////////////////////

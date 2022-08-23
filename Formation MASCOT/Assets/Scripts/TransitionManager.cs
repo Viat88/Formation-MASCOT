@@ -112,7 +112,7 @@ public class TransitionManager : MonoBehaviour
         if (GetChapterDoneIndex() >= 0){
             ShowTransitionCanva( true );
             GameObject currentPicture = GetStepPicture(GetChapterDoneIndex());
-            ShowVoile(true, currentPicture);
+            ShowVoile(false, currentPicture);
             ActivateAnimation(currentPicture);
         }
 
