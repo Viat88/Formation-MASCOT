@@ -70,13 +70,13 @@ public class PresManager : MonoBehaviour
         }
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Game Paused /////////////////////////////////
 
     private void IsGamePaused(GameState state){
         isGamePaused = (state == GameState.Paused);
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Manage Steps /////////////////////////////////
 
     private void ManageStep(){
 
@@ -159,24 +159,6 @@ public class PresManager : MonoBehaviour
         }
     }
 
-//////////////////////////// STEP FINISH ////////////////////////////////
-
-    private bool IsAudioSourcePlaying(){
-        return SpeechSoundManager.current.audioSource.isPlaying;
-    }
-
-    private bool IsVideoPlayerPlaying(){
-        return VideoManager.current.IsVideoPlayerPlaying();
-    }
-
-    private bool IsJamMoving(){
-        return !MoveJam.current.HasFinished();
-    }
-
-    private bool IsPreviousStepFinished(){
-        return !IsAudioSourcePlaying() && !IsVideoPlayerPlaying() && !IsJamMoving();
-    }
-
 /////////////////////////// PLAY /////////////////////////////////
 
     /*
@@ -212,8 +194,48 @@ public class PresManager : MonoBehaviour
         SpeechSoundManager.current.PlayPresClip(speechIndex);
     }
 
+//////////////////////////// STEP FINISH ////////////////////////////////
+
+    /*
+        Return true if the audio source is playing
+    */
+    private bool IsAudioSourcePlaying(){
+        return SpeechSoundManager.current.audioSource.isPlaying;
+    }
+
+    /*
+        Return true if the video source is playing
+    */
+    private bool IsVideoPlayerPlaying(){
+        return VideoManager.current.IsVideoPlayerPlaying();
+    }
+
+    /*
+        Return true if Jam is moving
+    */
+    private bool IsJamMoving(){
+        return !MoveJam.current.HasFinished();
+    }
+
+    /*
+        Return true if the previous step is finished
+    */
+    private bool IsPreviousStepFinished(){
+        return !IsAudioSourcePlaying() && !IsVideoPlayerPlaying() && !IsJamMoving();
+    }
+
 //////////////////////////// INDEX ////////////////////////////////  
 
+    /*
+        Create a list of two int: (n1, n2) with:
+         -n1 the chapter index
+         -n2 the step index inside the chapter
+
+        Input: 
+         int n, corresponding to n2
+        Output: 
+         List<int> newIndex; the list of two int
+    */
     private List<int> GetList(int n){
 
         List<int> newIndex = new List<int>();
@@ -238,22 +260,42 @@ public class PresManager : MonoBehaviour
 
 ////////////////////////// ARROW //////////////////////////////////
 
+    /*
+        Set arrow position with the the position given
+
+        Input:
+         Vector3 targetPosition, position where arrow has to be
+    */
     private void MoveArrow(Vector3 targetPosition){
         arrow.transform.position = targetPosition;
     }
 
+    /*
+        Show or Hide arrow
+        Entry: bool b, true = show and false = hide
+    */
     private void ShowArrow(bool b){
         arrow.SetActive(b);
     }
 
 ///////////////////////// BUTTONS ///////////////////////////////////
 
+    /*
+        Show or Hide final buttons
+        Entry: bool b, true = show and false = hide
+    */
     public void ShowFinalButtons(bool b){
         buttons.SetActive(b);
     }
 
 //////////////////////////// ENTRY FROM BUTTONS ////////////////////////////////
 
+    /*
+        Check the entry from buttons
+        Call EndButtons if the name of the button corresponds to the name of an end buttons
+        Call ChoiceButtons if the name of the button corresponds to the name of a choice buttons
+        An error warning otherwise
+    */
     public void CheckEntry(string s){
 
         if (s == "VideoButton" || s == "PhotoButton" || s == "NextButton"){

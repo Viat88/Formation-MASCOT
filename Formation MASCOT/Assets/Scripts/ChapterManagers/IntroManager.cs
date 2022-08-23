@@ -48,13 +48,14 @@ public class IntroManager : MonoBehaviour
         }
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Game Paused /////////////////////////////////
 
     private void IsGamePaused(GameState state){
         isGamePaused = (state == GameState.Paused);
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Manage Steps /////////////////////////////////
+
     private void ManageStep(){
 
         if (step == 0){
@@ -95,21 +96,36 @@ public class IntroManager : MonoBehaviour
 
 //////////////////////////// STEP FINISH ////////////////////////////////
 
+    /*
+        Return true if the audio source is playing
+    */
     private bool IsAudioSourcePlaying(){
         return SpeechSoundManager.current.audioSource.isPlaying;
     }
 
+    /*
+        Return true if the previous step is finished
+    */
     private bool IsPreviousStepFinished(){
         return !IsAudioSourcePlaying() ;
     }
 
 ///////////////////////// BUTTONS ///////////////////////////////////
 
+    /*
+        Show or Hide buttons
+        Entry: bool b, true = show and false = hide
+    */
     private void ShowButton(bool b){
         nextButton.SetActive(b);
     }
 
 //////////////////////////// ENTRY FROM BUTTONS ////////////////////////////////
+
+    /*
+        Check the entry from buttons
+        Increase step by 1 if next button pressed
+    */
     public void CheckEntry(string s){
         if ( s == "NextButton" ){
             step += 1;

@@ -29,10 +29,6 @@ public class EndManager : MonoBehaviour
         GlobalManager.OnGameStateChanged += IsGamePaused;
     }
 
-    void Start()
-    {}
-
-    // Update is called once per frame
     void Update()
     {
         if (!isGamePaused){
@@ -40,7 +36,7 @@ public class EndManager : MonoBehaviour
         }
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Game Paused /////////////////////////////////
 
     private void IsGamePaused(GameState state){
         isGamePaused = (state == GameState.Paused);
@@ -89,24 +85,42 @@ public class EndManager : MonoBehaviour
 
 //////////////////////////// STEP FINISH ////////////////////////////////
 
+    /*
+        Return true if the audio source is playing
+    */
     private bool IsAudioSourcePlaying(){
         return SpeechSoundManager.current.audioSource.isPlaying;
     }
 
+    /*
+        Return true if Jam is moving
+    */
     private bool IsJamMoving(){
         return !MoveJam.current.HasFinished();
     }
 
+
+    /*
+        Return true if the previous step is finished
+    */
     private bool IsPreviousStepFinished(){
         return !IsAudioSourcePlaying() && !IsJamMoving();
     }
 
 ///////////////////////// BUTTONS ///////////////////////////////////
 
+    /*
+        Show or Hide buttons
+        Entry: bool b, true = show and false = hide
+    */
     private void ShowButtons(bool b){
         canva.SetActive(b);
     }
 
+    /*
+        Make buttons interactables or not 
+        Entry: bool b, true = interactables and false = not interactables
+    */
     private void EnableButtons(bool b){
 
         foreach(Button button in buttonsList){
@@ -116,6 +130,10 @@ public class EndManager : MonoBehaviour
 
 //////////////////////////// ENTRY FROM BUTTONS ////////////////////////////////
 
+    /*
+        Check the entry from buttons
+        Call SetStep if the name of the button is known and an error warning otherwise
+    */
     public void CheckEntry(string s){
         if (s == "Appro" || s == "Sécurité" || s == "Prémontage" || s == "Montage" || s == "FinMontage" || s == "PièceDéfectueuse"){
             SetStep(s);
@@ -125,6 +143,9 @@ public class EndManager : MonoBehaviour
         }
     }
 
+    /*
+        Get the index of the chapter choosen depending on which button has been pressed
+    */
     private void SetStep( string s){
 
         ShowButtons(false);

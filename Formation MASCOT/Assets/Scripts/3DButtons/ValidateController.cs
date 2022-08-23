@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class ValidateController : MonoBehaviour
 {
-    public List<GameObject> iconList;
+    /*
+        Controller of 3D button "Validate" during Security chapter
+    */
 
-    public void OnMouseDown(){
+    public List<GameObject> iconList;                                           // List of icons available on screen
+
+
+    /*
+        Called when user click on mouse over the 3D button
+        Remove all frame of icons (=deselection), show responses and tell SecurityManager it has been clicked
+    */
+    public void OnMouseDown(){                                  
 
         foreach (GameObject g in iconList){
 

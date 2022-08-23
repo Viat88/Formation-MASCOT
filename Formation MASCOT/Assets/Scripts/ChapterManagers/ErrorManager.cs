@@ -43,13 +43,14 @@ public class ErrorManager : MonoBehaviour
             ManageStep();
         }
     }
-////////////////////////////////////////////////////////////
+
+/////////////////////////// Game Paused /////////////////////////////////
 
     private void IsGamePaused(GameState state){
         isGamePaused = (state == GameState.Paused);
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Manage Steps /////////////////////////////////
 
     private void ManageStep(){
 
@@ -138,6 +139,16 @@ public class ErrorManager : MonoBehaviour
 
 //////////////////////////// INDEX ////////////////////////////////
 
+    /*
+        Create a list of two int: (n1, n2) with:
+         -n1 the chapter index
+         -n2 the step index inside the chapter
+
+        Input: 
+         int n, corresponding to n2
+        Output: 
+         List<int> newIndex; the list of two int
+    */
     private List<int> GetList(int n){
 
         List<int> newIndex = new List<int>();
@@ -149,18 +160,30 @@ public class ErrorManager : MonoBehaviour
 
 //////////////////////////// STEP FINISH ////////////////////////////////
 
+    /*
+        Return true if the audio source is playing
+    */
     private bool IsAudioSourcePlaying(){
         return SpeechSoundManager.current.audioSource.isPlaying;
     }
 
+    /*
+        Return true if the video source is playing
+    */
     private bool IsVideoPlayerPlaying(){
         return VideoManager.current.IsVideoPlayerPlaying();
     }
 
+    /*
+        Return true if Jam is moving
+    */
     private bool IsJamMoving(){
         return !MoveJam.current.HasFinished();
     }
 
+    /*
+        Return true if the previous step is finished
+    */
     private bool IsPreviousStepFinished(){
         return !IsAudioSourcePlaying() && !IsJamMoving() && !IsVideoPlayerPlaying();
     }

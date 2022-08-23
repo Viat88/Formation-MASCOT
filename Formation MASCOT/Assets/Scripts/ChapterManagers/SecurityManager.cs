@@ -72,14 +72,13 @@ public class SecurityManager : MonoBehaviour
         }
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Game Paused /////////////////////////////////
 
     private void IsGamePaused(GameState state){
         isGamePaused = (state == GameState.Paused);
     }
 
-////////////////////////////////////////////////////////////
-
+/////////////////////////// Manage Steps /////////////////////////////////
     private void ManageStep(){
 
         if (step == 0){
@@ -183,7 +182,7 @@ public class SecurityManager : MonoBehaviour
         }
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// PLAY /////////////////////////////////
 
     /*
         Play next video by telling to GlobalManager the new Index
@@ -220,8 +219,18 @@ public class SecurityManager : MonoBehaviour
         SpeechSoundManager.current.PlaySecurityClip(speechIndex);
     }
 
-////////////////////////////////////////////////////////////
+//////////////////////////// INDEX ////////////////////////////////  
 
+    /*
+        Create a list of two int: (n1, n2) with:
+         -n1 the chapter index
+         -n2 the step index inside the chapter
+
+        Input: 
+         int n, corresponding to n2
+        Output: 
+         List<int> newIndex; the list of two int
+    */
     private List<int> GetList(int n){
 
         List<int> newIndex = new List<int>();
@@ -231,25 +240,37 @@ public class SecurityManager : MonoBehaviour
         return newIndex;
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// PLAY /////////////////////////////////
 
+    /*
+        Return true if the audio source is playing
+    */
     private bool IsAudioSourcePlaying(){
         return SpeechSoundManager.current.audioSource.isPlaying;
     }
 
+    /*
+        Return true if the video source is playing
+    */
     private bool IsVideoPlayerPlaying(){
         return VideoManager.current.IsVideoPlayerPlaying();
     }
 
+    /*
+        Return true if Jam is moving
+    */
     private bool IsJamMoving(){
         return !MoveJam.current.HasFinished();
     }
 
+    /*
+        Return true if the previous step is finished
+    */
     private bool IsPreviousStepFinished(){
         return !IsAudioSourcePlaying() && !IsJamMoving() && !IsVideoPlayerPlaying();
     }
 
-////////////////////////////////////////////////////////////
+///////////////////////////// HIDE THE SCREEN ///////////////////////////////
 
     /*
         Says to Global Manager if we have to hide the screen
@@ -262,8 +283,11 @@ public class SecurityManager : MonoBehaviour
         GlobalManager.current.HideScreen = b;
     }
 
-////////////////////////////////////////////////////////////
-        
+////////////////////////// RESPONSES //////////////////////////////////
+    
+    /*
+        Set the list of player responses
+    */
     private void SetResponsesList(){
 
         responses = new List<GameObject>();
@@ -273,6 +297,9 @@ public class SecurityManager : MonoBehaviour
         }
     }    
 
+    /*
+        Get all animator from icons and put it in iconAnimatorList
+    */
     private void SetIconAnimatorList(){
 
         iconAnimatorList = new List<Animator>();
@@ -282,7 +309,14 @@ public class SecurityManager : MonoBehaviour
         }
     }
 
+    /*
+        Activate the animation of icon of given index and desactivate, before, all animation if necessary
 
+        Input:
+         int n, index of the animator to activate
+         bool b1, true = all animation desactivate before, false: nothing done before
+         bool b2, true = animator activate, false the opposite
+    */
     private void ActivateIconAnimation(int n, bool b1, bool b2){
 
         if (b1){
@@ -291,12 +325,19 @@ public class SecurityManager : MonoBehaviour
         iconAnimatorList[n].enabled = b2;
     }
 
+    /*
+        Desactivate all animations of icons
+    */
     private void DesactivateAllIconAnimation(){
         foreach(Animator anim in iconAnimatorList){
             anim.enabled = false;
         }
     }
 
+
+    /*
+        Hide all responses
+    */
     private void DesactivateResponses(){
 
         foreach(GameObject g in responses){
@@ -304,14 +345,24 @@ public class SecurityManager : MonoBehaviour
         }
     }
 
-////////////////////////////////////////////////////////////
+///////////////////////// BUTTONS ///////////////////////////////////
 
+    /*
+        Show or Hide final buttons
+        Entry: bool b, true = show and false = hide
+    */
     public void ShowFinalButtons(bool b){
         finalButtons.SetActive(b);
     }
 
-////////////////////////////////////////////////////////////
+//////////////////////////// ENTRY FROM BUTTONS ////////////////////////////////
 
+    /*
+        Check the entry from buttons
+        Call EndButtons if the name of the button corresponds to the name of an end buttons
+        Call ChoiceButtons if the name of the button corresponds to the name of a choice buttons
+        An error warning otherwise
+    */
     public void CheckEntry(string s){
 
         if (s == "SecurityButton" || s == "ConfortButton" || s == "ValidateButton" || s == "NextButton"){

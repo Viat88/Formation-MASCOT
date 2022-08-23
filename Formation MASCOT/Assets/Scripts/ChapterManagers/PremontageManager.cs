@@ -67,13 +67,13 @@ public class PremontageManager : MonoBehaviour
         }
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Game Paused /////////////////////////////////
 
     private void IsGamePaused(GameState state){
         isGamePaused = (state == GameState.Paused);
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Manage Steps /////////////////////////////////
 
     private void ManageStep(){
 
@@ -176,7 +176,7 @@ public class PremontageManager : MonoBehaviour
         
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// PLAY /////////////////////////////////
 
     /*
         Play next video by telling to GlobalManager the new Index
@@ -188,8 +188,6 @@ public class PremontageManager : MonoBehaviour
     private void PlayVideo(int videoIndex){
         GlobalManager.current.VideoIndex = GetList(videoIndex);
     }
-
-
 
 
     /*
@@ -215,8 +213,18 @@ public class PremontageManager : MonoBehaviour
         SpeechSoundManager.current.PlayPremontageClip(speechIndex);
     }
 
-////////////////////////////////////////////////////////////
+//////////////////////////// INDEX ////////////////////////////////
 
+    /*
+        Create a list of two int: (n1, n2) with:
+         -n1 the chapter index
+         -n2 the step index inside the chapter
+
+        Input: 
+         int n, corresponding to n2
+        Output: 
+         List<int> newIndex; the list of two int
+    */
     private List<int> GetList(int n){
 
         List<int> newIndex = new List<int>();
@@ -226,25 +234,37 @@ public class PremontageManager : MonoBehaviour
         return newIndex;
     }
 
-////////////////////////////////////////////////////////////
+//////////////////////////// STEP FINISH ////////////////////////////////
 
+    /*
+        Return true if the audio source is playing
+    */
     private bool IsAudioSourcePlaying(){
         return SpeechSoundManager.current.audioSource.isPlaying;
     }
 
+    /*
+        Return true if the video source is playing
+    */
     private bool IsVideoPlayerPlaying(){
         return VideoManager.current.IsVideoPlayerPlaying();
     }
 
+    /*
+        Return true if Jam is moving
+    */
     private bool IsJamMoving(){
         return !MoveJam.current.HasFinished();
     }
 
+    /*
+        Return true if the previous step is finished
+    */
     private bool IsPreviousStepFinished(){
         return !IsAudioSourcePlaying() && !IsJamMoving() && !IsVideoPlayerPlaying();
     }
 
-////////////////////////////////////////////////////////////
+///////////////////////////// HIDE THE SCREEN ///////////////////////////////
 
     /*
         Says to Global Manager if we have to hide the screen
@@ -257,8 +277,14 @@ public class PremontageManager : MonoBehaviour
         GlobalManager.current.HideScreen = b;
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// PART SEEN LIST /////////////////////////////////
 
+    /*
+        Initialise choiceSeenList, the list of boolean telling if each choice has been selected
+
+        Input:
+         int listLength, the lenght of the list, ie, the number of choices
+    */
     private void InitialisePartSeenList(){
 
         partSeenList = new List<bool>();
@@ -266,26 +292,51 @@ public class PremontageManager : MonoBehaviour
         partSeenList.Add(false);        
     }
 
+    /*
+        Set the element of index n with the boolean value b
+        
+        Input:
+         int n, the index where to set the value
+         bool b, the boolean value to put
+    */
     private void SetElementPartSeenList(int n, bool b){
         partSeenList[n] = b;
     }
 
+    /*
+        Tells if all choices have been selected
+        
+        Output:
+         bool, false if one hasn't been selected (ie if there is a false in choiceSeenList), true otherwise
+    */
     private bool HaveAllPartBeenSeen(){
         return partSeenList[0] && partSeenList[1];
     }
 
-////////////////////////////////////////////////////////////
+///////////////////////// BUTTONS ///////////////////////////////////
 
+    /*
+        Show or Hide all buttons
+        Entry: bool b, true = show and false = hide
+    */
     private void ShowButtons(bool b){
         foreach(Button button in stepButtonList){
             button.gameObject.SetActive(b);
         }
     }
 
+    /*
+        Show or Hide nextButton
+        Entry: bool b, true = show and false = hide
+    */
     private void ShowNextButton(bool b){
         nextButton.gameObject.SetActive(b);
     }
 
+    /*
+        Show or Hide buttons (stepButtonList and nextButton)
+        Entry: bool b, true = show and false = hide
+    */
     private void EnableButtons(bool b){
 
         foreach(Button button in stepButtonList){
@@ -295,8 +346,14 @@ public class PremontageManager : MonoBehaviour
         nextButton.interactable = b;
     }
 
-////////////////////////////////////////////////////////////
+//////////////////////////// ENTRY FROM BUTTONS ////////////////////////////////
 
+    /*
+        Check the entry from buttons
+        Call EndButtons if the name of the button corresponds to the name of an end buttons
+        Call ChoiceButtons if the name of the button corresponds to the name of a choice buttons
+        An error warning otherwise
+    */
     public void CheckEntry(string s){
 
         if (s == "EpargneButton" || s == "ToolsButton" || s == "NextButton"){

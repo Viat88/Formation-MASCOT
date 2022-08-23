@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class StepButton : MonoBehaviour
 {
+    /*
+        Script used by buttons that allow user to see again a step of the chapter
+        Each function is directly called in Unity by the adequate button
+        Each function corresponds to a unique chapter, the name of the button helps the chapter to know which button has been pressed
+    */
 
     public void Introduction(){
         IntroManager.current.CheckEntry(name);

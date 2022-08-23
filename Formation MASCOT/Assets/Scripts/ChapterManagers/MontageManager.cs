@@ -96,13 +96,14 @@ public class MontageManager : MonoBehaviour
             ManageStep();
         }
     }
-////////////////////////////////////////////////////////////
+
+/////////////////////////// Game Paused /////////////////////////////////
 
     private void IsGamePaused(GameState state){
         isGamePaused = (state == GameState.Paused);
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Manage Steps /////////////////////////////////
 
     private void ManageStep(){
 
@@ -379,6 +380,16 @@ public class MontageManager : MonoBehaviour
 
 //////////////////////////// INDEX ////////////////////////////////
 
+    /*
+        Create a list of two int: (n1, n2) with:
+         -n1 the chapter index
+         -n2 the step index inside the chapter
+
+        Input: 
+         int n, corresponding to n2
+        Output: 
+         List<int> newIndex; the list of two int
+    */
     private List<int> GetList(int n){
 
         List<int> newIndex = new List<int>();
@@ -390,18 +401,30 @@ public class MontageManager : MonoBehaviour
 
 //////////////////////////// STEP FINISH ////////////////////////////////
 
+    /*
+        Return true if the audio source is playing
+    */
     private bool IsAudioSourcePlaying(){
         return SpeechSoundManager.current.audioSource.isPlaying;
     }
 
+    /*
+        Return true if the video source is playing
+    */
     private bool IsVideoPlayerPlaying(){
         return VideoManager.current.IsVideoPlayerPlaying();
     }
 
+    /*
+        Return true if Jam is moving
+    */
     private bool IsJamMoving(){
         return !MoveJam.current.HasFinished();
     }
 
+    /*
+        Return true if the previous step is finished
+    */
     private bool IsPreviousStepFinished(){
         return !IsAudioSourcePlaying() && !IsJamMoving() && !IsVideoPlayerPlaying();
     }
@@ -421,6 +444,12 @@ public class MontageManager : MonoBehaviour
 
 /////////////////////////// PART SEEN LIST /////////////////////////////////
 
+    /*
+        Initialise choiceSeenList, the list of boolean telling if each choice has been selected
+
+        Input:
+         int listLength, the lenght of the list, ie, the number of choices
+    */
     private void InitialisePartSeenList(int listLength){
 
         choiceSeenList = new List<bool>();
@@ -430,31 +459,65 @@ public class MontageManager : MonoBehaviour
         }         
     }
 
+
+    /*
+        Set the element of index n with the boolean value b
+        
+        Input:
+         int n, the index where to set the value
+         bool b, the boolean value to put
+    */
     private void SetElementPartSeenList(int n, bool b){
         choiceSeenList[n] = b;
     }
 
+    /*
+        Tells if all choices have been selected
+        
+        Output:
+         bool, false if one hasn't been selected (ie if there is a false in choiceSeenList), true otherwise
+    */
     private bool HaveAllPartBeenSeen(){
         return !choiceSeenList.Contains(false);
     }
 
 ////////////////////////// ARROW //////////////////////////////////
 
+    /*
+        Set arrow position with the the position given
+
+        Input:
+         Vector3 targetPosition, position where arrow has to be
+    */
     private void MoveArrow(Vector3 targetPosition){
         arrow.transform.position = targetPosition;
     }
 
+
+    /*
+        Show or Hide arrow
+        Entry: bool b, true = show and false = hide
+    */
     private void ShowArrow(bool b){
         arrow.SetActive(b);
     }
 
 ///////////////////////// BUTTONS ///////////////////////////////////
 
+    /*
+        Show or Hide choice buttons
+        Entry: bool b, true = show and false = hide
+    */
     private void ShowChoiceButton(int n, bool b){
         
         choiceButtonList[n].gameObject.SetActive(b);
     }
 
+
+    /*
+        Make buttons interactables or not 
+        Entry: bool b, true = interactables and false = not interactables
+    */
     private void EnableButtons(bool b){
 
         foreach(Button button in choiceButtonList){
@@ -462,12 +525,22 @@ public class MontageManager : MonoBehaviour
         }
     }
 
+    /*
+        Show or Hide buttons
+        Entry: bool b, true = show and false = hide
+    */
     private void ShowEndButtons(bool b){
         endButtons.SetActive(b);
     }
 
 //////////////////////////// ENTRY FROM BUTTONS ////////////////////////////////
 
+    /*
+        Check the entry from buttons
+        Call EndButtons if the name of the button corresponds to the name of an end buttons
+        Call ChoiceButtons if the name of the button corresponds to the name of a choice buttons
+        An error warning otherwise
+    */
     public void CheckEntry(string s){
 
         if (s == "OrdiButton" || s == "SuivantButton" || s == "ComposButton" || s == "NextButton"){
@@ -477,7 +550,7 @@ public class MontageManager : MonoBehaviour
         else{
 
             if(s == "Polaires" || s == "NonPolaires"){
-                ChoiceButton(s);
+                ChoiceButtons(s);
             }
 
             else{
@@ -511,7 +584,7 @@ public class MontageManager : MonoBehaviour
         }
     }
 
-    private void ChoiceButton(string s){
+    private void ChoiceButtons(string s){
 
         ShowChoiceButton(0, false);
         ShowChoiceButton(1, false);

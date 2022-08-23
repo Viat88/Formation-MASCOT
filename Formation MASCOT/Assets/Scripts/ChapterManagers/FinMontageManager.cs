@@ -55,13 +55,13 @@ public class FinMontageManager : MonoBehaviour
         }
     }
     
-////////////////////////////////////////////////////////////
+/////////////////////////// Game Paused /////////////////////////////////
 
     private void IsGamePaused(GameState state){
         isGamePaused = (state == GameState.Paused);
     }
 
-////////////////////////////////////////////////////////////
+/////////////////////////// Manage Steps /////////////////////////////////
 
     private void ManageStep(){
 
@@ -170,6 +170,16 @@ public class FinMontageManager : MonoBehaviour
 
 //////////////////////////// INDEX ////////////////////////////////
 
+    /*
+        Create a list of two int: (n1, n2) with:
+         -n1 the chapter index
+         -n2 the step index inside the chapter
+
+        Input: 
+         int n, corresponding to n2
+        Output: 
+         List<int> newIndex; the list of two int
+    */
     private List<int> GetList(int n){
 
         List<int> newIndex = new List<int>();
@@ -181,18 +191,30 @@ public class FinMontageManager : MonoBehaviour
 
 //////////////////////////// STEP FINISH ////////////////////////////////
 
+    /*
+        Return true if the audio source is playing
+    */
     private bool IsAudioSourcePlaying(){
         return SpeechSoundManager.current.audioSource.isPlaying;
     }
 
+    /*
+        Return true if the video source is playing
+    */
     private bool IsVideoPlayerPlaying(){
         return VideoManager.current.IsVideoPlayerPlaying();
     }
 
+    /*
+        Return true if Jam is moving
+    */
     private bool IsJamMoving(){
         return !MoveJam.current.HasFinished();
     }
 
+    /*
+        Return true if the previous step is finished
+    */
     private bool IsPreviousStepFinished(){
         return !IsAudioSourcePlaying() && !IsJamMoving() && !IsVideoPlayerPlaying();
     }
@@ -212,18 +234,32 @@ public class FinMontageManager : MonoBehaviour
 
 ////////////////////////// ARROW //////////////////////////////////
 
+    /*
+        Set arrow position with the the position given
+
+        Input:
+         Vector3 targetPosition, position where arrow has to be
+    */
     private void MoveArrow(Vector3 targetPosition){
         arrow.transform.position = targetPosition;
     }
 
 ///////////////////////// BUTTONS ///////////////////////////////////
 
+    /*
+        Show or Hide end buttons
+        Entry: bool b, true = show and false = hide
+    */
     private void ShowEndButtons(bool b){
         endButtons.SetActive(b);
     }
 
 //////////////////////////// ENTRY FROM BUTTONS ////////////////////////////////
 
+    /*
+        Check the entry from buttons
+        Call SetStep if the name of the button is known and an error warning otherwise
+    */
     public void CheckEntry(string s){
 
         if (s == "RevoirButton"  || s == "NextButton"){
@@ -236,6 +272,9 @@ public class FinMontageManager : MonoBehaviour
             
     }
 
+    /*
+        Get the index of the chapter choosen depending on which button has been pressed
+    */
     private void EndButtons(string s){
 
         ShowEndButtons(false);
