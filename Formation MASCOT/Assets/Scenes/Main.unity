@@ -224,6 +224,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 716900181204227797, guid: 3357f8df709161a48b2f38b4b6a083dc, type: 3}
   m_PrefabInstance: {fileID: 20023077}
   m_PrefabAsset: {fileID: 0}
+--- !u!328 &20023080 stripped
+VideoPlayer:
+  m_CorrespondingSourceObject: {fileID: 20023079, guid: 3357f8df709161a48b2f38b4b6a083dc, type: 3}
+  m_PrefabInstance: {fileID: 20023077}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &101263212
 GameObject:
   m_ObjectHideFlags: 0
@@ -6482,6 +6487,10 @@ PrefabInstance:
       propertyPath: arrowPositionList.Array.data[2]
       value: 
       objectReference: {fileID: 1173965601}
+    - target: {fileID: 5046719197409902597, guid: 7da3bec09b7b48f408edae031c31020c, type: 3}
+      propertyPath: videoPlayer
+      value: 
+      objectReference: {fileID: 20023080}
     - target: {fileID: 5046719197409902597, guid: 7da3bec09b7b48f408edae031c31020c, type: 3}
       propertyPath: videoScreen
       value: 

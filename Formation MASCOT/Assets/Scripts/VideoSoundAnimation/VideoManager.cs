@@ -7,7 +7,7 @@ public class VideoManager : MonoBehaviour
 {
     public static VideoManager current;
     public GameObject videoScreen;
-    private VideoPlayer videoPlayer;
+    public VideoPlayer videoPlayer;
 
     private float timeSinceStart = 0;
     public float timeToWait; 
